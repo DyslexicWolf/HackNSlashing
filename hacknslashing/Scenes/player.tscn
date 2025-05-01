@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmjs8ru7k3ke"]
+[gd_scene load_steps=9 format=3 uid="uid://bmjs8ru7k3ke"]
 
+[ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scenes/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cqbqrtp255gvd" path="res://Assets/Sprites/PlayerCharacter_Front_SpriteSheet.png" id="1_v0iea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
@@ -43,6 +44,7 @@ radius = 7.0
 height = 26.0
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3wgy")
