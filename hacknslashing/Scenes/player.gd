@@ -1,32 +1,17 @@
 extends CharacterBody2D
 
+const SPEED = 130.0
 
 func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _process(delta: float) -> void:
-	#read keyboardinput, this returns -1, 0, 1
-	var horizontalDirection = Input.get_axis("move_left", "move_right")
-	var verticalDirection = Input.get_axis("move_down", "move_up")
-	
-	if verticalDirection > 0:
-		if horizontalDirection > 0:
-			print("move up right")
-		elif horizontalDirection < 0:
-			print("move up left")
-		else:
-			print("move up")
-			
-	elif verticalDirection < 0:
-		if horizontalDirection > 0:
-			print("move down right")
-		elif horizontalDirection < 0:
-			print("move down left")
-		else:
-			print("move down")
-		
-	elif horizontalDirection > 0:
-		print("move right")
-	elif horizontalDirection < 0:
-		print("move left")
+func _physics_process(delta: float):
+	#read input
+	get_input()
+	#move character using buildin function
+	move_and_slide()
+
+func get_input():
+	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	velocity = direction * SPEED
