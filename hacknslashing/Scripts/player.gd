@@ -1,7 +1,9 @@
 extends CharacterBody2D
 
 const SPEED = 130.0
+var health: int = 10
 var direction
+var isAttacking: bool = false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
@@ -35,3 +37,10 @@ func change_animation():
 		animated_sprite.play("idle_front")
 	else:
 		animated_sprite.play("idle_front")
+func attack():
+	pass
+
+func _takeDamage(damageTaken):
+	health =- damageTaken
+	if health <= 0:
+		get_tree().reload_current_scene()
