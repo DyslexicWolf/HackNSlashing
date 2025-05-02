@@ -1,8 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://bmjs8ru7k3ke"]
+[gd_scene load_steps=30 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cqbqrtp255gvd" path="res://Assets/Sprites/PlayerCharacter_Front_SpriteSheet.png" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://csj8qg62ri6kv" path="res://Assets/Sprites/PlayerCharacter_Back_Spritesheet.png" id="2_6t5aa"]
+[ext_resource type="PackedScene" uid="uid://cq5nqcfvfeiq6" path="res://Components/health.tscn" id="4_vgqql"]
+[ext_resource type="Script" uid="uid://c5r2kx6kdyc10" path="res://Scripts/hurtbox.gd" id="5_fkybt"]
+[ext_resource type="PackedScene" uid="uid://cm288xnonu824" path="res://Components/sword.tscn" id="6_x3wgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
 atlas = ExtResource("2_6t5aa")
@@ -167,22 +170,44 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v0iea"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3wgy"]
 radius = 7.0
-height = 26.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fkybt"]
+radius = 9.0
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
-collision_layer = 4
-collision_mask = 10
+collision_layer = 0
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_cvnsp")
 
+[node name="Health" parent="." instance=ExtResource("4_vgqql")]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3wgy")
-animation = &"run_back"
+animation = &"idle_front"
 autoplay = "idle_front"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_v0iea")
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("5_fkybt")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://c5r2kx6kdyc10"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_x3wgy")
+
+[node name="MovementBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_fkybt")
+
+[node name="Sword" parent="." instance=ExtResource("6_x3wgy")]
+position = Vector2(0, -30)
+
+[connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]

@@ -1,10 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwsqn33maj6u8"]
+[gd_scene load_steps=10 format=3 uid="uid://bwsqn33maj6u8"]
 
-[ext_resource type="Script" uid="uid://d3h8yeli7pfmx" path="res://Scripts/slime.gd" id="1_jokqx"]
+[ext_resource type="Script" uid="uid://c00fjsds8q6e7" path="res://Scripts/slime.gd" id="1_jokqx"]
+[ext_resource type="Texture2D" uid="uid://cyjpo7ifu4gs5" path="res://Assets/Sprites/Slime_temp.png" id="2_swwnm"]
+[ext_resource type="Script" uid="uid://c5r2kx6kdyc10" path="res://Scripts/hurtbox.gd" id="3_paq7w"]
+[ext_resource type="Script" uid="uid://btedrswfaqmxu" path="res://Scripts/hitbox.gd" id="4_f4si1"]
+[ext_resource type="Script" uid="uid://dfaeym8g0l3mv" path="res://Scripts/health.gd" id="5_f4si1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_paq7w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_swwnm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f4si1"]
+radius = 14.0357
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5gljc"]
+radius = 21.0238
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_swwnm"]
+radius = 13.0384
 
 [node name="Slime" type="RigidBody2D"]
+gravity_scale = 0.0
 script = ExtResource("1_jokqx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Health" type="Node" parent="."]
+script = ExtResource("5_f4si1")
+max_health = 5
+metadata/_custom_type_script = "uid://dfaeym8g0l3mv"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_paq7w")
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+position = Vector2(0, 4)
+collision_layer = 0
+script = ExtResource("3_paq7w")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_f4si1")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("4_f4si1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_5gljc")
+
+[node name="MovementBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_swwnm")
+
+[connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_depleted"]

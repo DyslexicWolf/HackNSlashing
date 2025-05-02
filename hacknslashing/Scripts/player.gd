@@ -1,14 +1,9 @@
 extends CharacterBody2D
 
 const SPEED = 130.0
-var health: int = 10
 var direction
 var isAttacking: bool = false
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-
-func _ready() -> void:
-	pass # Replace with function body.
-
 
 func _physics_process(delta: float):
 	#read input
@@ -20,7 +15,6 @@ func _physics_process(delta: float):
 
 func get_input():
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	print(direction)
 	velocity = direction * SPEED
 
 func change_animation():
@@ -40,7 +34,11 @@ func change_animation():
 func attack():
 	pass
 
-func _takeDamage(damageTaken):
-	health =- damageTaken
-	if health <= 0:
-		get_tree().reload_current_scene()
+
+func _on_health_changed(diff: int) -> void:
+	print("player took damage")
+
+
+func _on_health_depleted() -> void:
+	print("player died")
+	queue_free()

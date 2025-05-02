@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm3ori28t8cj8"
-path="res://.godot/imported/PlaceHolderSword.png-c3cf3241b9498693f6db8e9b185018a5.ctex"
+uid="uid://7j5a4fs8o704"
+path="res://.godot/imported/Sword_Spritesheet.png-0c87c28b27928158e51f1a8f8026a9d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/PlaceHolderSword.png"
-dest_files=["res://.godot/imported/PlaceHolderSword.png-c3cf3241b9498693f6db8e9b185018a5.ctex"]
+source_file="res://Assets/Sprites/Sword_Spritesheet.png"
+dest_files=["res://.godot/imported/Sword_Spritesheet.png-0c87c28b27928158e51f1a8f8026a9d6.ctex"]
 
 [params]
 
