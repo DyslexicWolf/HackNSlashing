@@ -1,9 +1,8 @@
 [gd_scene load_steps=36 format=3 uid="uid://cm288xnonu824"]
 
+[ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/sword.gd" id="1_4s73l"]
 [ext_resource type="Texture2D" uid="uid://7j5a4fs8o704" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
 [ext_resource type="Script" uid="uid://btedrswfaqmxu" path="res://Scripts/hitbox.gd" id="3_7iixe"]
-
-[sub_resource type="GDScript" id="GDScript_m47rk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wdhb"]
 atlas = ExtResource("2_kbd3j")
@@ -251,13 +250,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_rrml0"]
 
 [node name="Sword" type="Node2D"]
-script = SubResource("GDScript_m47rk")
+script = ExtResource("1_4s73l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d6wag")
 animation = &"attack_vertical"
 autoplay = "idle_vertical"
-frame_progress = 0.795696
+frame_progress = 0.839894
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0

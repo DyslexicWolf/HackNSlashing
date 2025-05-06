@@ -3,7 +3,7 @@ extends CharacterBody2D
 const SPEED = 130.0
 var direction
 var isAttacking: bool = false
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var player_animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(delta: float):
 	#read input
@@ -20,20 +20,19 @@ func get_input():
 func change_animation():
 	#y-axis is flipped in godot!!!
 	if direction.y < 0:
-		animated_sprite.play("run_back")
+		player_animated_sprite.play("run_back")
 	elif direction.y > 0:
-		animated_sprite.play("run_front")
+		player_animated_sprite.play("run_front")
 	elif direction.x > 0:
-		animated_sprite.flip_h = false
-		animated_sprite.play("idle_front")
+		player_animated_sprite.flip_h = false
+		player_animated_sprite.play("idle_front")
 	elif direction.x < 0:
-		animated_sprite.flip_h = true
-		animated_sprite.play("idle_front")
+		player_animated_sprite.flip_h = true
+		player_animated_sprite.play("idle_front")
 	else:
-		animated_sprite.play("idle_front")
+		player_animated_sprite.play("idle_front")
 func attack():
 	pass
-
 
 func _on_health_changed(diff: int) -> void:
 	print("player took damage")
