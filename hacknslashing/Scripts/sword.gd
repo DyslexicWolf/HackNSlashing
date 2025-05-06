@@ -3,7 +3,6 @@ extends Node2D
 @onready var sword_animated_sprite = $AnimatedSprite2D
 @onready var attackCooldownTimer: Timer = null
 var sword_distance: float = 32
-var mouseInput
 var attackCooldown: float = 1.5
 var canAttack: bool = true : set = set_canAttack, get = get_canAttack
 
@@ -22,9 +21,7 @@ func _ready() -> void:
 	attackCooldownTimer.timeout.connect(set_canAttack.bind(true))
 
 func _process(delta):
-	#add attackcooldown
 	#look into the other "action pressed" methods if this doesnt feel right
-	
 	if Input.is_action_pressed("attack", false) && canAttack:
 		canAttack = false
 		attackCooldownTimer.start()
@@ -37,7 +34,6 @@ func _process(delta):
 	
 	# Calculate the new position of the sword based on the angle
 	var sword_position = Vector2(cos(angle), sin(angle)) * sword_distance
-	# Set the sword position relative to the player
 	sword_animated_sprite.position = sword_position
 	
 	# Set the swordsprite based on the angle
