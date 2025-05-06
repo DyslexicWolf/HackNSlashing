@@ -26,10 +26,10 @@ func change_animation():
 		player_animated_sprite.play("run_front")
 	elif direction.x > 0:
 		player_animated_sprite.flip_h = false
-		player_animated_sprite.play("idle_front")
+		player_animated_sprite.play("run_side")
 	elif direction.x < 0:
 		player_animated_sprite.flip_h = true
-		player_animated_sprite.play("idle_front")
+		player_animated_sprite.play("run_side")
 	else:
 		player_animated_sprite.play("idle_front")
 func attack():

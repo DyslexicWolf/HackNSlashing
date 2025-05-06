@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csj8qg62ri6kv"
-path="res://.godot/imported/PlayerCharacter_Back_Spritesheet.png-b6983ee1410899d00cd1ed344596c26b.ctex"
+uid="uid://c7lyvrcqsg0pt"
+path="res://.godot/imported/Spear_Spritesheet.png-ac28ba352a8564c735835d2c077e526a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/PlayerCharacter_Back_Spritesheet.png"
-dest_files=["res://.godot/imported/PlayerCharacter_Back_Spritesheet.png-b6983ee1410899d00cd1ed344596c26b.ctex"]
+source_file="res://Assets/Sprites/Spear_Spritesheet.png"
+dest_files=["res://.godot/imported/Spear_Spritesheet.png-ac28ba352a8564c735835d2c077e526a.ctex"]
 
 [params]
 
