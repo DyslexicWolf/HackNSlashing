@@ -254,7 +254,7 @@ script = ExtResource("1_4s73l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d6wag")
-animation = &"attack_diagonal"
+animation = &"idle_vertical"
 autoplay = "idle_vertical"
 
 [node name="HitBox" type="Area2D" parent="."]

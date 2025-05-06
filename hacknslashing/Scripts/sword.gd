@@ -33,105 +33,18 @@ func _ready() -> void:
 
 func _process(delta):
 	#look into the other "action pressed" methods if this doesnt feel right
-	var result = get_animation_specifics()
+	get_animation_specifics()
 	if Input.is_action_pressed("attack", false) && can_attack:
 		is_attacking = true
 		can_attack = false
 		attack_cooldown_timer.start()
-		#change the horizontal attack sprites because it is in the wrong direction rightnow
-		attack(result)
+		sword_animated_sprite.play("attack_vertical")
 	elif !is_attacking:
-		idle(result)
+		sword_animated_sprite.play("idle_vertical")
 
 func on_animation_finished() -> void:
-	if sword_animated_sprite.animation == "attack_vertical" || sword_animated_sprite.animation == "attack_horizontal" || sword_animated_sprite.animation == "attack_diagonal":
+	if sword_animated_sprite.animation == "attack_vertical":
 		is_attacking = false
-
-func attack(angle) -> void:
-	print("attacked")
-	if angle > -PI/8 and angle <= PI/8:
-		# Right
-		sword_animated_sprite.play("attack_horizontal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
-	elif angle > PI/8 and angle <= 3*PI/8:
-		# Down-Right
-		sword_animated_sprite.play("attack_diagonal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = true
-	elif angle > 3*PI/8 and angle <= 5*PI/8:
-		# Down
-		sword_animated_sprite.play("attack_vertical")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = true
-	elif angle > 5*PI/8 and angle <= 7*PI/8:
-		# Down-Left
-		sword_animated_sprite.play("attack_diagonal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = true
-	elif angle > 7*PI/8 or angle <= -7*PI/8:
-		# Left
-		sword_animated_sprite.play("attack_horizontal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = false
-	elif angle > -7*PI/8 and angle <= -5*PI/8:
-		# Up-Left
-		sword_animated_sprite.play("attack_diagonal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = false
-	elif angle > -5*PI/8 and angle <= -3*PI/8:
-		# Up
-		sword_animated_sprite.play("attack_vertical")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
-	elif angle > -3*PI/8 and angle <= -PI/8:
-		# Up-Right
-		sword_animated_sprite.play("attack_diagonal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
-
-func idle(angle) -> void:
-	# Set the swordanimatedsprite based on the angle
-	if angle > -PI/8 and angle <= PI/8:
-		# Right
-		sword_animated_sprite.play("idle_horizontal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
-	elif angle > PI/8 and angle <= 3*PI/8:
-		# Down-Right
-		sword_animated_sprite.play("idle_diagonal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = true
-	elif angle > 3*PI/8 and angle <= 5*PI/8:
-		# Down
-		sword_animated_sprite.play("idle_vertical")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = true
-	elif angle > 5*PI/8 and angle <= 7*PI/8:
-		# Down-Left
-		sword_animated_sprite.play("idle_diagonal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = true
-	elif angle > 7*PI/8 or angle <= -7*PI/8:
-		# Left
-		sword_animated_sprite.play("idle_horizontal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = false
-	elif angle > -7*PI/8 and angle <= -5*PI/8:
-		# Up-Left
-		sword_animated_sprite.play("idle_diagonal")
-		sword_animated_sprite.flip_h = true
-		sword_animated_sprite.flip_v = false
-	elif angle > -5*PI/8 and angle <= -3*PI/8:
-		# Up
-		sword_animated_sprite.play("idle_vertical")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
-	elif angle > -3*PI/8 and angle <= -PI/8:
-		# Up-Right
-		sword_animated_sprite.play("idle_diagonal")
-		sword_animated_sprite.flip_h = false
-		sword_animated_sprite.flip_v = false
 
 func get_animation_specifics():
 	var mouse_position = get_global_mouse_position()
@@ -139,7 +52,8 @@ func get_animation_specifics():
 	var direction = (mouse_position - global_position).normalized()
 	var angle = direction.angle()
 	
+	#make the sword look at the mouse position
+	sword_animated_sprite.look_at(get_global_mouse_position())
+	sword_animated_sprite.rotate(PI/2)
 	# Calculate the new position of the sword based on the angle
-	var sword_position = Vector2(cos(angle) * sword_distance_x, sin(angle) * sword_distance_y)
-	sword_animated_sprite.position = sword_position
-	return angle
+	sword_animated_sprite.position = Vector2(cos(angle) * sword_distance_x, sin(angle) * sword_distance_y)
