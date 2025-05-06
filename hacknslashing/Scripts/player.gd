@@ -5,6 +5,7 @@ var direction
 var isAttacking: bool = false
 @onready var player_animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+
 func _physics_process(delta: float):
 	#read input
 	get_input()

@@ -145,7 +145,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5uo8h")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_diagonal",
 "speed": 13.0
 }, {
@@ -168,7 +168,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pxruu")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_horizontal",
 "speed": 13.0
 }, {
@@ -191,7 +191,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s4ba6")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_vertical",
 "speed": 13.0
 }, {
@@ -254,9 +254,8 @@ script = ExtResource("1_4s73l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d6wag")
-animation = &"attack_vertical"
+animation = &"attack_diagonal"
 autoplay = "idle_vertical"
-frame_progress = 0.839894
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0
