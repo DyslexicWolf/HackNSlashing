@@ -1,48 +1,48 @@
 [gd_scene load_steps=16 format=3 uid="uid://cm288xnonu824"]
 
 [ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/sword.gd" id="1_4s73l"]
-[ext_resource type="Texture2D" uid="uid://cbr2fvmxvtg7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
+[ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
 [ext_resource type="Script" uid="uid://btedrswfaqmxu" path="res://Scripts/hitbox.gd" id="3_7iixe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4s73l"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(128, 0, 32, 32)
+region = Rect2(192, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kbd3j"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(160, 0, 32, 32)
+region = Rect2(240, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7iixe"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(192, 0, 32, 32)
+region = Rect2(288, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rrml0"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(224, 0, 32, 32)
+region = Rect2(336, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tfeni"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(256, 0, 32, 32)
+region = Rect2(384, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ibosg"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(288, 0, 32, 32)
+region = Rect2(432, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_exmpj"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(0, 0, 32, 32)
+region = Rect2(0, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1cxvp"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(48, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_snfs4"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(64, 0, 32, 32)
+region = Rect2(96, 0, 48, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swfk0"]
 atlas = ExtResource("2_kbd3j")
-region = Rect2(96, 0, 32, 32)
+region = Rect2(144, 0, 48, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d6wag"]
 animations = [{
@@ -96,6 +96,8 @@ script = ExtResource("1_4s73l")
 sprite_frames = SubResource("SpriteFrames_d6wag")
 animation = &"attack_vertical"
 autoplay = "idle_vertical"
+frame = 5
+frame_progress = 1.0
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0

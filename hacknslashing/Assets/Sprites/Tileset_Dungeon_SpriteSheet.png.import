@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b243yawqo4m7d"
-path="res://.godot/imported/Sword_Spritesheet.png-0c87c28b27928158e51f1a8f8026a9d6.ctex"
+uid="uid://cn2go4fwinlgv"
+path="res://.godot/imported/Tileset_Dungeon_SpriteSheet.png-3411e164e2cd3e48a730db211a86ec5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Sword_Spritesheet.png"
-dest_files=["res://.godot/imported/Sword_Spritesheet.png-0c87c28b27928158e51f1a8f8026a9d6.ctex"]
+source_file="res://Assets/Sprites/Tileset_Dungeon_SpriteSheet.png"
+dest_files=["res://.godot/imported/Tileset_Dungeon_SpriteSheet.png-3411e164e2cd3e48a730db211a86ec5f.ctex"]
 
 [params]
 
