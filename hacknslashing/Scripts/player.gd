@@ -38,7 +38,6 @@ func attack():
 func _on_health_changed(diff: int) -> void:
 	print("player took damage")
 
-
 func _on_health_depleted() -> void:
 	print("player died")
 	queue_free()
