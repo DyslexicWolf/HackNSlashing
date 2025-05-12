@@ -40,13 +40,13 @@ func _process(delta):
 		can_attack = false
 		attack_cooldown_timer.start()
 		sword_Collission.disabled = false
-		sword_animated_sprite.play("attack_vertical")
+		sword_animated_sprite.play("attack")
 		sword_Collission.disabled = true
 	elif !is_attacking:
-		sword_animated_sprite.play("idle_vertical")
+		sword_animated_sprite.play("idle")
 
 func on_animation_finished() -> void:
-	if sword_animated_sprite.animation == "attack_vertical":
+	if sword_animated_sprite.animation == "attack":
 		is_attacking = false
 
 func get_animation_specifics():

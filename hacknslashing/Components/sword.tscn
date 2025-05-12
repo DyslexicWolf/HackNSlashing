@@ -66,7 +66,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ibosg")
 }],
 "loop": true,
-"name": &"attack_vertical",
+"name": &"attack",
 "speed": 3.0
 }, {
 "frames": [{
@@ -83,7 +83,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_swfk0")
 }],
 "loop": true,
-"name": &"idle_vertical",
+"name": &"idle",
 "speed": 5.5
 }]
 
@@ -92,9 +92,8 @@ script = ExtResource("1_4s73l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d6wag")
-animation = &"attack_vertical"
-autoplay = "idle_vertical"
-frame_progress = 0.175442
+animation = &"idle"
+autoplay = "idle"
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0
