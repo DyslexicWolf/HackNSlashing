@@ -1,9 +1,9 @@
 [gd_scene load_steps=39 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/health_player.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
-[ext_resource type="PackedScene" uid="uid://cq5nqcfvfeiq6" path="res://Components/health.tscn" id="4_vgqql"]
-[ext_resource type="Script" uid="uid://c5r2kx6kdyc10" path="res://Scripts/hurtbox.gd" id="5_fkybt"]
+[ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/hurtbox_player.gd" id="4_fkybt"]
 [ext_resource type="PackedScene" uid="uid://cm288xnonu824" path="res://Components/sword.tscn" id="6_x3wgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
@@ -263,21 +263,20 @@ collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_cvnsp")
 
-[node name="Health" parent="." instance=ExtResource("4_vgqql")]
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_fkybt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"run_side"
 autoplay = "idle_front"
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="HurtBox_player" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("5_fkybt")
-health = NodePath("../Health")
-metadata/_custom_type_script = "uid://c5r2kx6kdyc10"
+script = ExtResource("4_fkybt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox_player"]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_x3wgy")
 

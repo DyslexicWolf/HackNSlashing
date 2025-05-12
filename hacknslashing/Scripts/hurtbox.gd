@@ -1,17 +1,19 @@
 class_name HurtBox
-extends Area2D
+extends Node2D
 
 signal received_damage(damage: int)
 
-@export var health: Health
+var health = null
 
 #connect the onareaentered fucntion to the area_entered signal (otherwise you would have to do this manually for every instance of the hurtboxes you have
-func _ready() -> void:
+#call in _ready function in child classes
+func preload_variables() -> void:
 	connect("area_entered", _on_area_entered)
 
 func _on_area_entered(hitbox: HitBox) -> void:
-	print("on area entered")
 	if hitbox != null:
-		print("got hit")
+		print(self.name + " got hit")
+		print(health.health)
 		health.health -= hitbox.damage
+		print(health.health)
 		received_damage.emit(hitbox.damage)

@@ -32,11 +32,9 @@ func change_animation():
 		player_animated_sprite.play("run_side")
 	else:
 		player_animated_sprite.play("idle_front")
-func attack():
-	pass
 
 func _on_health_changed(diff: int) -> void:
-	print("player took damage")
+	print("player health changed")
 
 func _on_health_depleted() -> void:
 	print("player died")

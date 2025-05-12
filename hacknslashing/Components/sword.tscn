@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/sword.gd" id="1_4s73l"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
-[ext_resource type="Script" uid="uid://btedrswfaqmxu" path="res://Scripts/hitbox.gd" id="3_7iixe"]
+[ext_resource type="Script" uid="uid://citl2ku141i2m" path="res://Scripts/hitbox_sword.gd" id="3_4s73l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4s73l"]
 atlas = ExtResource("2_kbd3j")
@@ -99,8 +99,7 @@ frame_progress = 1.0
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0
-script = ExtResource("3_7iixe")
-metadata/_custom_type_script = "uid://btedrswfaqmxu"
+script = ExtResource("3_4s73l")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
 position = Vector2(-1, 8)
