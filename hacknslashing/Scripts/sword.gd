@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var sword_animated_sprite = $AnimatedSprite2D
 @onready var attack_cooldown_timer: Timer = null
+@onready var sword_Collission = $HitBox/CollisionPolygon2D
 
 # Width of the oval
 var sword_distance_x: int = 24
@@ -38,7 +39,9 @@ func _process(delta):
 		is_attacking = true
 		can_attack = false
 		attack_cooldown_timer.start()
+		sword_Collission.disabled = false
 		sword_animated_sprite.play("attack_vertical")
+		sword_Collission.disabled = true
 	elif !is_attacking:
 		sword_animated_sprite.play("idle_vertical")
 

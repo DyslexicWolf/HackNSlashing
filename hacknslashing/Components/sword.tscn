@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cm288xnonu824"]
+[gd_scene load_steps=15 format=3 uid="uid://cm288xnonu824"]
 
 [ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/sword.gd" id="1_4s73l"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
@@ -65,9 +65,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ibosg")
 }],
-"loop": false,
+"loop": true,
 "name": &"attack_vertical",
-"speed": 13.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -87,8 +87,6 @@ animations = [{
 "speed": 5.5
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rrml0"]
-
 [node name="Sword" type="Node2D"]
 script = ExtResource("1_4s73l")
 
@@ -96,13 +94,14 @@ script = ExtResource("1_4s73l")
 sprite_frames = SubResource("SpriteFrames_d6wag")
 animation = &"attack_vertical"
 autoplay = "idle_vertical"
-frame = 5
-frame_progress = 1.0
+frame_progress = 0.175442
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_mask = 0
 script = ExtResource("3_7iixe")
 metadata/_custom_type_script = "uid://btedrswfaqmxu"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource("CircleShape2D_rrml0")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
+position = Vector2(-1, 8)
+polygon = PackedVector2Array(23, 0, 1, 0, -23, 0, -20, -10, -13, -19, 0, -23, 11, -23, 18, -14)
+disabled = true
