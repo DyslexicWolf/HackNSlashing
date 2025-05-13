@@ -10,8 +10,7 @@ func _ready() -> void:
 func set_health(value: int):
 	#return (do nothing) if you value is lower than health (because we will have a takedamage func for that
 	#or if immortality is true
-	if value < health and immortality:
-		return
+	#implement immortality logic if wanted	
 	
 	var clamped_value = clampi(value, 0, max_health)
 	if clamped_value != health:

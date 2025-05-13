@@ -24,13 +24,7 @@ func set_max_health(value: int):
 func get_max_health() -> int:
 	return max_health
 
-
 func set_health(value: int):
-	#return (do nothing) if you value is lower than health (because we will have a takedamage func for that
-	#or if immortality is true
-	if value < health:
-		return
-	
 	var clamped_value = clampi(value, 0, max_health)
 	if clamped_value != health:
 		#calculate the healthchange

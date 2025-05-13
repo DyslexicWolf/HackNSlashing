@@ -13,7 +13,5 @@ func preload_variables() -> void:
 func _on_area_entered(hitbox: HitBox) -> void:
 	if hitbox != null:
 		print(self.name + " got hit")
-		print(health.health)
 		health.health -= hitbox.damage
-		print(health.health)
 		received_damage.emit(hitbox.damage)

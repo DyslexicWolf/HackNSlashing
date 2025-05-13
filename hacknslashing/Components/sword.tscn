@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=3 uid="uid://cm288xnonu824"]
 
-[ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/sword.gd" id="1_4s73l"]
+[ext_resource type="Script" uid="uid://b15ojljgpmc4a" path="res://Scripts/Weapon/sword.gd" id="1_4s73l"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_kbd3j"]
-[ext_resource type="Script" uid="uid://citl2ku141i2m" path="res://Scripts/hitbox_sword.gd" id="3_4s73l"]
+[ext_resource type="Script" uid="uid://citl2ku141i2m" path="res://Scripts/Weapon/hitbox_sword.gd" id="3_4s73l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4s73l"]
 atlas = ExtResource("2_kbd3j")
@@ -99,9 +99,10 @@ autoplay = "idle"
 [node name="HitBox" type="Area2D" parent="."]
 position = Vector2(0, -13)
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("3_4s73l")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox"]
 position = Vector2(-1, 8)
 polygon = PackedVector2Array(23, 0, 1, 0, -23, 0, -20, -10, -13, -19, 0, -23, 11, -23, 18, -14)
-disabled = true
