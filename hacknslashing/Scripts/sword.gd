@@ -7,7 +7,7 @@ func _init() -> void:
 	
 func _ready() -> void:
 	weapon_animated_sprite = $AnimatedSprite2D
-	weapon_collisionpolygon = $HitBox/CollisionPolygon2D
+	weapon_hitbox = $HitBox
 	super.preload_variables()
 
 func _physics_process(delta: float) -> void:

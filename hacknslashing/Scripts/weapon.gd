@@ -4,7 +4,8 @@ extends Node2D
 #set these variables in the init function in the child class
 var weapon_animated_sprite = null
 var attack_cooldown_timer: Timer = null
-var weapon_collisionpolygon = null
+var weapon_hitbox = null
+var player_object = null
 
 # Width of the oval
 var weapon_distance_x: int
@@ -28,6 +29,7 @@ func get_can_attack() -> bool:
 
 #call this in _ready function in child classes
 func preload_variables() -> void:
+	player_object = get_parent()
 	attack_cooldown_timer = Timer.new()
 	add_child(attack_cooldown_timer)
 	attack_cooldown_timer.one_shot = true
@@ -43,24 +45,29 @@ func weapon_physics() -> void:
 		is_attacking = true
 		can_attack = false
 		attack_cooldown_timer.start()
-		weapon_collisionpolygon.disabled = false
+		weapon_hitbox.monitoring = true
+		weapon_hitbox.monitorable = true
 		weapon_animated_sprite.play("attack")
 	elif !is_attacking:
 		weapon_animated_sprite.play("idle")
 
 func on_animation_finished() -> void:
 	if weapon_animated_sprite.animation == "attack":
-		weapon_collisionpolygon.disabled = true
+		weapon_hitbox.monitoring = false
+		weapon_hitbox.monitorable = false
 		is_attacking = false
 
 func get_animation_specifics():
 	var mouse_position = get_global_mouse_position()
 	# Calculate the direction vector from the player to the mouse
-	var direction = (mouse_position - global_position).normalized()
+	var direction = (mouse_position - player_object.position).normalized()
 	var angle = direction.angle()
 	
 	#make the sword look at the mouse position
-	self.look_at(get_global_mouse_position())
-	self.rotate(PI/2)
+	weapon_animated_sprite.look_at(get_global_mouse_position())
+	weapon_hitbox.look_at(get_global_mouse_position())
+	weapon_animated_sprite.rotate(PI/2)
+	weapon_hitbox.rotate(PI/2)
 	# Calculate the new position of the sword based on the angle
-	self.position = Vector2(cos(angle) * weapon_distance_x, sin(angle) * weapon_distance_y)
+	weapon_animated_sprite.position = Vector2(cos(angle) * weapon_distance_x, sin(angle) * weapon_distance_y)
+	weapon_hitbox.position = Vector2(cos(angle) * weapon_distance_x, sin(angle) * weapon_distance_y)

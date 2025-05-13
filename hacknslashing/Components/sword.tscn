@@ -91,13 +91,13 @@ animations = [{
 script = ExtResource("1_4s73l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_d6wag")
-animation = &"attack"
+animation = &"idle"
 autoplay = "idle"
-frame = 5
-frame_progress = 1.0
 
 [node name="HitBox" type="Area2D" parent="."]
+position = Vector2(0, -13)
 collision_mask = 0
 script = ExtResource("3_4s73l")
 
