@@ -68,6 +68,7 @@ func get_animation_specifics():
 	weapon_hitbox.look_at(get_global_mouse_position())
 	weapon_animated_sprite.rotate(PI/2)
 	weapon_hitbox.rotate(PI/2)
+	
 	# Calculate the new position of the sword based on the angle
 	weapon_animated_sprite.position = Vector2(cos(angle) * weapon_distance_x, sin(angle) * weapon_distance_y)
 	weapon_hitbox.position = Vector2(cos(angle) * weapon_distance_x, sin(angle) * weapon_distance_y)
