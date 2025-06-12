@@ -1,10 +1,19 @@
-[gd_scene load_steps=39 format=3 uid="uid://bmjs8ru7k3ke"]
+[gd_scene load_steps=50 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/health_player.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
 [ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/Player/hurtbox_player.gd" id="4_fkybt"]
-[ext_resource type="PackedScene" uid="uid://cm288xnonu824" path="res://Components/sword.tscn" id="6_x3wgy"]
+[ext_resource type="Script" uid="uid://blderps2wltnx" path="res://Scripts/BaseClasses/weapon.gd" id="5_fkybt"]
+[ext_resource type="Script" uid="uid://fkv3qen78uqk" path="res://Scripts/BaseClasses/hitbox.gd" id="6_f1ek2"]
+[ext_resource type="Animation" uid="uid://drcuhqst63m7t" path="res://Assets/Animations/Sword_idle_animation.res" id="7_tx1dd"]
+[ext_resource type="Animation" uid="uid://bmh1xjk5e3wxs" path="res://Assets/Animations/Sword_attack_animation.res" id="8_gymyn"]
+[ext_resource type="Animation" uid="uid://bi284q4moaecs" path="res://Assets/Animations/Spear_idle_animation.res" id="9_gymyn"]
+[ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="9_pu2lt"]
+[ext_resource type="Animation" uid="uid://bmktlnjq6806i" path="res://Assets/Animations/Spear_attack_animation.res" id="10_pu2lt"]
+[ext_resource type="Script" uid="uid://tl0o0rhrhmer" path="res://Scripts/Player/pickupmanager.gd" id="12_ukyrk"]
+[ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="13_7dp3o"]
+[ext_resource type="Resource" uid="uid://lk73u83ckawr" path="res://Resources/SpearResource.tres" id="14_7dp3o"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
 atlas = ExtResource("3_fkybt")
@@ -256,6 +265,102 @@ height = 28.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fkybt"]
 radius = 9.0
 
+[sub_resource type="Animation" id="Animation_f1ek2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponSprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponSprite:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeaponSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponSprite:frame_coords")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(5, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponHitBox/CollisionPolygon2D:polygon")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WeaponHitBox/CollisionPolygon2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WeaponHitBox/CollisionPolygon2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7dp3o"]
+_data = {
+&"RESET": SubResource("Animation_f1ek2"),
+&"Spear_attack_animation": ExtResource("10_pu2lt"),
+&"Spear_idle_animation": ExtResource("9_gymyn"),
+&"Sword_attack_animation": ExtResource("8_gymyn"),
+&"Sword_idle_animation": ExtResource("7_tx1dd")
+}
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 0
@@ -284,7 +389,33 @@ shape = SubResource("CapsuleShape2D_x3wgy")
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_fkybt")
 
-[node name="Sword" parent="." instance=ExtResource("6_x3wgy")]
+[node name="WeaponManager" type="Node2D" parent="."]
+script = ExtResource("5_fkybt")
+equipped_weapon_data = ExtResource("13_7dp3o")
+metadata/_custom_type_script = "uid://blderps2wltnx"
+
+[node name="WeaponHitBox" type="Area2D" parent="."]
+script = ExtResource("6_f1ek2")
+metadata/_custom_type_script = "uid://fkv3qen78uqk"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]
+polygon = PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)
+disabled = true
+
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7dp3o")
+}
+
+[node name="WeaponSprite" type="Sprite2D" parent="."]
+texture = ExtResource("9_pu2lt")
+hframes = 10
+frame = 5
+
+[node name="PickupManager" type="Node2D" parent="."]
+script = ExtResource("12_ukyrk")
+weaponpickuptest = ExtResource("14_7dp3o")
 
 [connection signal="health_changed" from="Health_player" to="." method="_on_health_changed"]
 [connection signal="health_depleted" from="Health_player" to="." method="_on_health_depleted"]
+[connection signal="weapon_equipped" from="PickupManager" to="WeaponManager" method="_on_weapon_equipped"]
