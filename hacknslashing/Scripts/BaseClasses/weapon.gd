@@ -39,6 +39,7 @@ func _load_weapon(new_weapon_data : WeaponResource):
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_animation_player.current_animation = equipped_weapon_data.idle_animation
 	weapon_animation_player.animation_finished.connect(on_animation_finished)
+	weapon_hitbox.damage = equipped_weapon_data.damage
 
 #call this in _physics_process function in child classes
 func _physics_process(delta : float):

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://bonn4va8moen0"]
 
-[ext_resource type="Script" uid="uid://dnltylmtrn2tg" path="res://Resources/WeaponResource.gd" id="1_grmnr"]
+[ext_resource type="Script" uid="uid://dnltylmtrn2tg" path="res://Resources/ResourceBlueprints/WeaponResource.gd" id="1_grmnr"]
 
 [resource]
 script = ExtResource("1_grmnr")
@@ -10,4 +10,5 @@ weapon_distance_y = 30
 attack_cooldown = 0.5
 idle_animation = "Sword_idle_animation"
 attack_animation = "Sword_attack_animation"
+damage = 5
 metadata/_custom_type_script = "uid://dnltylmtrn2tg"

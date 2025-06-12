@@ -7,6 +7,7 @@ class_name WeaponResource
 @export var attack_cooldown : float
 @export var idle_animation : String
 @export var attack_animation : String
+@export var damage : int
 
 #call this like you would call a function where you have a weapon resource variable
 func example_method():
