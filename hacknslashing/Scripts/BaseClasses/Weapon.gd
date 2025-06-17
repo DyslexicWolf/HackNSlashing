@@ -31,14 +31,19 @@ func _ready() -> void:
 	add_child(attack_cooldown_timer)
 	attack_cooldown_timer.one_shot = true
 	attack_cooldown_timer.timeout.connect(set_can_attack.bind(true))
+	weapon_animation_player = $"../WeaponAnimationPlayer"
 	_load_weapon(equipped_weapon_data)
 
 func _load_weapon(new_weapon_data : WeaponResource):
 	equipped_weapon_data = new_weapon_data
+	weapon_sprite.texture = equipped_weapon_data.weapon_texture
 	attack_cooldown_timer.wait_time = equipped_weapon_data.attack_cooldown
-	weapon_animation_player = $"../WeaponAnimationPlayer"
-	weapon_animation_player.current_animation = equipped_weapon_data.idle_animation
-	weapon_animation_player.animation_finished.connect(on_animation_finished)
+	weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
+	if weapon_animation_player.animation_finished.is_connected(on_animation_finished) :
+		weapon_animation_player.animation_finished.disconnect(on_animation_finished)
+		weapon_animation_player.animation_finished.connect(on_animation_finished)
+	else :
+		weapon_animation_player.animation_finished.connect(on_animation_finished)
 	weapon_hitbox.damage = equipped_weapon_data.damage
 
 #call this in _physics_process function in child classes
@@ -51,12 +56,12 @@ func _physics_process(delta : float):
 		attack_cooldown_timer.start()
 		weapon_hitbox.monitoring = true
 		weapon_hitbox.monitorable = true
-		weapon_animation_player.current_animation = equipped_weapon_data.attack_animation
+		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, equipped_weapon_data.attack_animation_speed, false)
 	elif !is_attacking:
-		weapon_animation_player.current_animation = equipped_weapon_data.idle_animation
+		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 
-func on_animation_finished() -> void:
-	if weapon_animation_player.current_animation == equipped_weapon_data.attack_animation:
+func on_animation_finished(anim_name : String):
+	if anim_name == equipped_weapon_data.attack_animation:
 		weapon_hitbox.monitoring = false
 		weapon_hitbox.monitorable = false
 		is_attacking = false

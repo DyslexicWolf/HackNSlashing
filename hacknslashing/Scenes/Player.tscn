@@ -1,17 +1,17 @@
 [gd_scene load_steps=50 format=3 uid="uid://bmjs8ru7k3ke"]
 
-[ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/player.gd" id="1_cvnsp"]
-[ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/health_player.gd" id="2_fkybt"]
+[ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/Player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/HealthPlayer.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
-[ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/Player/hurtbox_player.gd" id="4_fkybt"]
-[ext_resource type="Script" uid="uid://blderps2wltnx" path="res://Scripts/BaseClasses/weapon.gd" id="5_fkybt"]
-[ext_resource type="Script" uid="uid://fkv3qen78uqk" path="res://Scripts/BaseClasses/hitbox.gd" id="6_f1ek2"]
-[ext_resource type="Animation" uid="uid://drcuhqst63m7t" path="res://Assets/Animations/Sword_idle_animation.res" id="7_tx1dd"]
-[ext_resource type="Animation" uid="uid://bmh1xjk5e3wxs" path="res://Assets/Animations/Sword_attack_animation.res" id="8_gymyn"]
-[ext_resource type="Animation" uid="uid://bi284q4moaecs" path="res://Assets/Animations/Spear_idle_animation.res" id="9_gymyn"]
+[ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/Player/HurtboxPlayer.gd" id="4_fkybt"]
+[ext_resource type="Script" uid="uid://blderps2wltnx" path="res://Scripts/BaseClasses/Weapon.gd" id="5_fkybt"]
+[ext_resource type="Script" uid="uid://fkv3qen78uqk" path="res://Scripts/BaseClasses/Hitbox.gd" id="6_f1ek2"]
+[ext_resource type="Animation" uid="uid://drcuhqst63m7t" path="res://Assets/Animations/SwordIdleAnimation.res" id="7_tx1dd"]
+[ext_resource type="Animation" uid="uid://bmh1xjk5e3wxs" path="res://Assets/Animations/SwordAttackAnimation.res" id="8_gymyn"]
+[ext_resource type="Animation" uid="uid://bi284q4moaecs" path="res://Assets/Animations/SpearIdleAnimation.res" id="9_gymyn"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="9_pu2lt"]
-[ext_resource type="Animation" uid="uid://bmktlnjq6806i" path="res://Assets/Animations/Spear_attack_animation.res" id="10_pu2lt"]
-[ext_resource type="Script" uid="uid://tl0o0rhrhmer" path="res://Scripts/Player/pickupmanager.gd" id="12_ukyrk"]
+[ext_resource type="Animation" uid="uid://bmktlnjq6806i" path="res://Assets/Animations/SpearAttackAnimation.res" id="10_pu2lt"]
+[ext_resource type="Script" uid="uid://tl0o0rhrhmer" path="res://Scripts/Player/PickupManager.gd" id="12_ukyrk"]
 [ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="13_7dp3o"]
 [ext_resource type="Resource" uid="uid://lk73u83ckawr" path="res://Resources/SpearResource.tres" id="14_7dp3o"]
 
@@ -330,22 +330,10 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("WeaponHitBox/CollisionPolygon2D:disabled")
+tracks/5/path = NodePath("WeaponHitBox/CollisionPolygon2D:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("WeaponHitBox/CollisionPolygon2D:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -363,12 +351,11 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
-collision_layer = 0
-collision_mask = 0
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_cvnsp")
 
-[node name="Health_player" type="Node2D" parent="."]
+[node name="HealthPlayer" type="Node2D" parent="."]
 script = ExtResource("2_fkybt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -376,12 +363,11 @@ sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"run_side"
 autoplay = "idle_front"
 
-[node name="HurtBox_player" type="Area2D" parent="."]
-collision_layer = 0
+[node name="HurtBoxPlayer" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource("4_fkybt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox_player"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxPlayer"]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_x3wgy")
 
@@ -395,12 +381,14 @@ equipped_weapon_data = ExtResource("13_7dp3o")
 metadata/_custom_type_script = "uid://blderps2wltnx"
 
 [node name="WeaponHitBox" type="Area2D" parent="."]
+collision_mask = 2
+monitoring = false
+monitorable = false
 script = ExtResource("6_f1ek2")
 metadata/_custom_type_script = "uid://fkv3qen78uqk"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]
 polygon = PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)
-disabled = true
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -408,6 +396,7 @@ libraries = {
 }
 
 [node name="WeaponSprite" type="Sprite2D" parent="."]
+z_index = -1
 texture = ExtResource("9_pu2lt")
 hframes = 10
 frame = 5
@@ -416,6 +405,6 @@ frame = 5
 script = ExtResource("12_ukyrk")
 weaponpickuptest = ExtResource("14_7dp3o")
 
-[connection signal="health_changed" from="Health_player" to="." method="_on_health_changed"]
-[connection signal="health_depleted" from="Health_player" to="." method="_on_health_depleted"]
+[connection signal="health_changed" from="HealthPlayer" to="." method="_on_health_changed"]
+[connection signal="health_depleted" from="HealthPlayer" to="." method="_on_health_depleted"]
 [connection signal="weapon_equipped" from="PickupManager" to="WeaponManager" method="_on_weapon_equipped"]

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PickupResource" load_steps=3 format=3 uid="uid://cci81q02skv3g"]
+
+[ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="1_3rq71"]
+[ext_resource type="Script" uid="uid://ckpf6b781lvu5" path="res://Resources/ResourceBlueprints/PickupResource.gd" id="1_lc6q3"]
+
+[resource]
+script = ExtResource("1_lc6q3")
+name = "SwordPickup"
+pickup_texture = ExtResource("1_3rq71")
+metadata/_custom_type_script = "uid://ckpf6b781lvu5"

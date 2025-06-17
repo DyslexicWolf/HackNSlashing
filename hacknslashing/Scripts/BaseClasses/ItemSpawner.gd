@@ -1,0 +1,7 @@
+extends Node2D
+
+@export var sword_pickup : PickupResource
+var pickup_scene = preload("res://Scenes/PickupItem.tscn")
+
+func _ready() -> void:
+	var inst_pickup_scene = pickup_scene.instantiate()
