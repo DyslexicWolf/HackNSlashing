@@ -84,3 +84,7 @@ func get_animation_specifics():
 
 func _on_weapon_equipped(weapon : WeaponResource) -> void:
 	_load_weapon(weapon) # Replace with function body.
+
+
+func _on_picked_up_weapon(weapon: WeaponResource) -> void:
+	_load_weapon(weapon)

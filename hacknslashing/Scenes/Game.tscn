@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://b36cyrcp3ikk1"]
+[gd_scene load_steps=9 format=4 uid="uid://b36cyrcp3ikk1"]
 
 [ext_resource type="PackedScene" uid="uid://bmjs8ru7k3ke" path="res://Scenes/Player.tscn" id="1_b2bpf"]
-[ext_resource type="LabelSettings" uid="uid://c0qakygcpcs1a" path="res://Resources/ResourceBlueprints/LabelSettingsResource.tres" id="2_7lihs"]
 [ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/Slime.tscn" id="3_fgofq"]
 [ext_resource type="Texture2D" uid="uid://cn2go4fwinlgv" path="res://Assets/Sprites/Tileset_Dungeon_SpriteSheet.png" id="4_2irst"]
+[ext_resource type="PackedScene" uid="uid://c60abfvxmm4ly" path="res://Scenes/PickupItem.tscn" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://bu04ynlcfou8u" path="res://Scripts/BaseClasses/ItemSpawner.gd" id="5_bf53h"]
+[ext_resource type="Resource" uid="uid://cci81q02skv3g" path="res://Resources/SwordPickupResource.tres" id="6_7lihs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("4_2irst")
@@ -39,18 +40,6 @@ sources/0 = SubResource("TileSetAtlasSource_wrm1d")
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2.5, 2.5)
 
-[node name="TemporaryPickupText" type="Label" parent="Player/Camera2D"]
-visible = false
-z_index = 15
-offset_left = -135.0
-offset_top = 102.0
-offset_right = 138.0
-offset_bottom = 130.0
-text = "Press \"E\" to pick up the item"
-label_settings = ExtResource("2_7lihs")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Slime" parent="." instance=ExtResource("3_fgofq")]
 position = Vector2(49, -54)
 
@@ -60,3 +49,7 @@ tile_set = SubResource("TileSet_3dryh")
 
 [node name="ItemSpawner" type="Node2D" parent="."]
 script = ExtResource("5_bf53h")
+
+[node name="PickupItem" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(67, 12)
+pickResource = ExtResource("6_7lihs")

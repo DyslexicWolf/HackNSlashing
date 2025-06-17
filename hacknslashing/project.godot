@@ -62,6 +62,7 @@ pickup={
 2d_render/layer_4="Environment"
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Slime"
+2d_physics/layer_3="Items"
 
 [rendering]
 
