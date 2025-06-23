@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://bonn4va8moen0"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://bonn4va8moen0"]
 
 [ext_resource type="Script" uid="uid://dnltylmtrn2tg" path="res://Resources/ResourceBlueprints/WeaponResource.gd" id="1_grmnr"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_j61fh"]
+[ext_resource type="Texture2D" uid="uid://iqjehaa1kv4r" path="res://Assets/Sprites/Sword_Texture.png" id="2_rk5kr"]
 
 [resource]
 script = ExtResource("1_grmnr")
-name = "Sword"
 weapon_distance_x = 24
 weapon_distance_y = 30
 attack_cooldown = 0.5
@@ -13,6 +13,10 @@ idle_animation = "Sword_idle_animation"
 attack_animation = "Sword_attack_animation"
 idle_animation_speed = 1.5
 attack_animation_speed = 2.5
-weapon_texture = ExtResource("2_j61fh")
+animation_texture = ExtResource("2_j61fh")
 damage = 3
+type = 1
+name = "Sword"
+inventory_texture = ExtResource("2_rk5kr")
+description = "What a sword"
 metadata/_custom_type_script = "uid://dnltylmtrn2tg"

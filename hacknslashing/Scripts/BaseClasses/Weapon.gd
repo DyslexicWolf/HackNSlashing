@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _load_weapon(new_weapon_data : WeaponResource):
 	equipped_weapon_data = new_weapon_data
-	weapon_sprite.texture = equipped_weapon_data.weapon_texture
+	weapon_sprite.texture = equipped_weapon_data.animation_texture
 	attack_cooldown_timer.wait_time = equipped_weapon_data.attack_cooldown
 	weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 	if weapon_animation_player.animation_finished.is_connected(on_animation_finished) :
