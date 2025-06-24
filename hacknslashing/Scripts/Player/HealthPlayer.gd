@@ -2,6 +2,7 @@ extends Health
 
 var immortality: bool = false : set = set_immortality, get = get_immortality
 var immortality_timer: Timer = null
+enum DamageType {PHYSICAL, ELEMENTAL}
 
 func _ready() -> void:
 	max_health = 3
@@ -44,3 +45,14 @@ func set_temporary_immortality(time: float):
 	immortality_timer.timeout.connect(set_immortality.bind(false))
 	immortality = true
 	immortality_timer.start()
+
+
+func _on_received_damage(damage: int, damage_type: DamageType) -> void:
+	#calculate the damage taken here based on damage type and damage amount
+	if damage_type == DamageType.PHYSICAL:
+		print("i just took physical damage, awtch")
+		health -= damage
+	
+	if damage_type == DamageType.ELEMENTAL:
+		print("i just took elemental damage, goddamn")
+		health -= damage

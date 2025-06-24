@@ -414,6 +414,7 @@ metadata/_custom_type_script = "uid://blderps2wltnx"
 [node name="PickupManager" type="Node2D" parent="."]
 script = ExtResource("12_ukyrk")
 
+[connection signal="received_damage" from="HurtBoxPlayer" to="HealthManager" method="_on_received_damage"]
 [connection signal="area_entered" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_entered"]
 [connection signal="area_exited" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_exited"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]

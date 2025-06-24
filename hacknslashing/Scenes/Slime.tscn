@@ -31,9 +31,6 @@ collision_layer = 2
 gravity_scale = 0.0
 script = ExtResource("1_jokqx")
 
-[node name="HealthSlime" type="Node2D" parent="."]
-script = ExtResource("2_f4si1")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_paq7w")
 
@@ -57,5 +54,8 @@ shape = SubResource("CircleShape2D_5gljc")
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_swwnm")
 
-[connection signal="health_changed" from="HealthSlime" to="." method="_on_health_changed"]
-[connection signal="health_depleted" from="HealthSlime" to="." method="_on_health_depleted"]
+[node name="HealthManager" type="Node2D" parent="."]
+script = ExtResource("2_f4si1")
+
+[connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
+[connection signal="health_depleted" from="HealthManager" to="." method="_on_health_depleted"]

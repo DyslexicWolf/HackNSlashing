@@ -13,6 +13,7 @@ var strength: int : set = set_strength, get = get_strength
 #luck for items is based on this
 var luck: int : set = set_luck, get = get_luck
 
+var armor: int : set = set_armor, get = get_armor
 var movement_speed: int : set = set_movement_speed, get = get_movement_speed
 var attack_speed: int : set = set_attack_speed, get = get_attack_speed
 var crit_chance: int : set = set_crit_chance, get = get_attack_speed
@@ -22,6 +23,7 @@ signal intelligence_changed(new_value : int)
 signal dexterity_changed(new_value : int)
 signal strength_changed(new_value : int)
 signal luck_changed(new_value : int)
+signal armor_changed(new_value : int)
 signal movement_speed_changed(new_value : int)
 signal attack_speed_changed(new_value : int)
 signal crit_chance_changed(new_value : int)
@@ -46,6 +48,10 @@ func set_strength(value : int):
 func set_luck(value : int):
 	luck += value
 	luck_changed.emit(luck)
+
+func set_armor(value : int):
+	armor += value
+	armor_changed.emit(armor)
 
 func set_movement_speed(value : int):
 	movement_speed += value
@@ -76,14 +82,17 @@ func get_strength() -> int:
 func get_luck() -> int:
 	return luck
 
+func get_armor() -> int:
+	return armor
+
 func get_movement_speed() -> int:
-	return dexterity
+	return movement_speed
 
 func get_attack_speed() -> int:
-	return strength
+	return attack_speed
 
 func get_crit_chance() -> int:
-	return luck
+	return crit_chance
 
 
 func _ready() -> void:
@@ -93,6 +102,7 @@ func _ready() -> void:
 	dexterity = 10
 	strength = 10
 	luck = 10
+	armor = 15
 	movement_speed = 130
 	attack_speed = 1
 	crit_chance = 5

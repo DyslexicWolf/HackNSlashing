@@ -1,6 +1,8 @@
 extends ItemResource
 class_name WeaponResource
 
+enum DamageType {PHYSICAL, ELEMENTAL}
+
 @export var weapon_distance_x : int
 @export var weapon_distance_y : int
 @export var idle_animation : String
@@ -8,8 +10,9 @@ class_name WeaponResource
 @export var animation_texture : Texture2D
 @export var idle_animation_speed : float
 @export var attack_animation_speed : float
-@export var base_attack_speed : float
 @export var base_damage : int
+@export var damage_type : DamageType
+@export var base_attack_speed : float
 @export var base_elemental_damage : int
 @export var base_crit_chance : float
 

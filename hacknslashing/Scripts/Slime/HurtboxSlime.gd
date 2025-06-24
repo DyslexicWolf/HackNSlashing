@@ -1,5 +1,5 @@
 extends HurtBox
 
 func _ready() -> void:
-	health = $"../HealthSlime"
+	health = $"../HealthManager"
 	super.preload_variables()

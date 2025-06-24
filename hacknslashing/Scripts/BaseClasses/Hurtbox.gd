@@ -10,8 +10,9 @@ var health = null
 func preload_variables() -> void:
 	connect("area_entered", _on_area_entered)
 
-func _on_area_entered(hitbox: HitBox) -> void:
-	if hitbox != null:
+#we take area2d as argument so we stay general and the doesnt error, after we check if it is a hitbox
+func _on_area_entered(hitbox: Area2D) -> void:
+	if  hitbox is HitBox:
 		print(self.name + " got hit")
 		health.health -= hitbox.damage
 		received_damage.emit(hitbox.damage)
