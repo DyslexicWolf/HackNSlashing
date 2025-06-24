@@ -11,6 +11,10 @@ var player_object = null
 
 var is_attacking: bool = false : set = set_is_attacking, get = get_is_attacking
 var can_attack: bool = true : set = set_can_attack, get = get_can_attack
+var calculated_physical_damage: int
+var calculated_elemental_damage: int
+var calculated_crit_chance: int
+var calculated_attack_speed: int
 
 func set_is_attacking(value : bool):
 	is_attacking = value
@@ -37,14 +41,14 @@ func _ready() -> void:
 func _load_weapon(new_weapon_data : WeaponResource):
 	equipped_weapon_data = new_weapon_data
 	weapon_sprite.texture = equipped_weapon_data.animation_texture
-	attack_cooldown_timer.wait_time = equipped_weapon_data.attack_cooldown
+	attack_cooldown_timer.wait_time = equipped_weapon_data.base_attack_speed
 	weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 	if weapon_animation_player.animation_finished.is_connected(on_animation_finished) :
 		weapon_animation_player.animation_finished.disconnect(on_animation_finished)
 		weapon_animation_player.animation_finished.connect(on_animation_finished)
 	else :
 		weapon_animation_player.animation_finished.connect(on_animation_finished)
-	weapon_hitbox.damage = equipped_weapon_data.damage
+	weapon_hitbox.damage = calculated_physical_damage
 
 #call this in _physics_process function in child classes
 func _physics_process(delta : float):
@@ -53,6 +57,7 @@ func _physics_process(delta : float):
 	if Input.is_action_pressed("attack", false) && can_attack:
 		is_attacking = true
 		can_attack = false
+		calculate_crit()
 		attack_cooldown_timer.start()
 		weapon_hitbox.monitoring = true
 		weapon_hitbox.monitorable = true
@@ -60,8 +65,8 @@ func _physics_process(delta : float):
 	elif !is_attacking:
 		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 
-func on_animation_finished(anim_name : String):
-	if anim_name == equipped_weapon_data.attack_animation:
+func on_animation_finished(animation_name : String):
+	if animation_name == equipped_weapon_data.attack_animation:
 		weapon_hitbox.monitoring = false
 		weapon_hitbox.monitorable = false
 		is_attacking = false
@@ -82,9 +87,29 @@ func get_animation_specifics():
 	weapon_sprite.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
 	weapon_hitbox.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
 
-func _on_weapon_equipped(weapon : WeaponResource) -> void:
-	_load_weapon(weapon) # Replace with function body.
+func calculate_crit() -> void:
+	pass
 
+func _on_weapon_equipped(weapon : WeaponResource) -> void:
+	_load_weapon(weapon)
 
 func _on_picked_up_weapon(weapon: WeaponResource) -> void:
 	_load_weapon(weapon)
+
+func _on_strength_changed(new_value: int) -> void:
+	#this is a temporary calculation, we shouldnt add the flat amount of strength to the damage (i think)
+	calculated_physical_damage = equipped_weapon_data.base_damage + new_value
+	if weapon_hitbox != null:
+		weapon_hitbox.damage = calculated_physical_damage
+
+func _on_intelligence_changed(new_value: int) -> void:
+	#this is a temporary calculation, we shouldnt add the flat amount of intelligence to the damage (i think)
+	calculated_elemental_damage = equipped_weapon_data.base_elemental_damage + new_value
+
+func _on_crit_chance_changed(new_value: int) -> void:
+	#this is a temporary calculation
+	calculated_crit_chance = equipped_weapon_data.base_crit_chance + new_value
+
+func _on_attack_speed_changed(new_value: int) -> void:
+	#this is a temporary calculation
+	calculated_attack_speed = equipped_weapon_data.base_attack_speed + new_value

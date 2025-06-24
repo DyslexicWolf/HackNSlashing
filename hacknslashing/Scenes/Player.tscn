@@ -1,9 +1,10 @@
-[gd_scene load_steps=50 format=3 uid="uid://bmjs8ru7k3ke"]
+[gd_scene load_steps=51 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/Player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/HealthPlayer.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
 [ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/Player/HurtboxPlayer.gd" id="4_fkybt"]
+[ext_resource type="Script" uid="uid://b1dbhhn36a5bw" path="res://Scripts/Player/StatManager.gd" id="5_7dp3o"]
 [ext_resource type="Script" uid="uid://blderps2wltnx" path="res://Scripts/BaseClasses/Weapon.gd" id="5_fkybt"]
 [ext_resource type="Script" uid="uid://fkv3qen78uqk" path="res://Scripts/BaseClasses/Hitbox.gd" id="6_f1ek2"]
 [ext_resource type="Animation" uid="uid://drcuhqst63m7t" path="res://Assets/Animations/SwordIdleAnimation.res" id="7_tx1dd"]
@@ -348,16 +349,13 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o3h8g"]
 height = 32.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1e7my"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7dp3o"]
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_cvnsp")
-
-[node name="HealthPlayer" type="Node2D" parent="."]
-script = ExtResource("2_fkybt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_x3wgy")
@@ -371,14 +369,6 @@ script = ExtResource("4_fkybt")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxPlayer"]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_x3wgy")
-
-[node name="WeaponManager" type="Node2D" parent="."]
-script = ExtResource("5_fkybt")
-equipped_weapon_data = ExtResource("14_7dp3o")
-metadata/_custom_type_script = "uid://blderps2wltnx"
-
-[node name="PickupManager" type="Node2D" parent="."]
-script = ExtResource("12_ukyrk")
 
 [node name="WeaponHitBox" type="Area2D" parent="."]
 collision_mask = 2
@@ -407,12 +397,30 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupHitBox"]
 shape = SubResource("CapsuleShape2D_o3h8g")
 
-[node name="TempMovementbox" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CapsuleShape2D_1e7my")
+[node name="MovementBox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_7dp3o")
 
-[connection signal="health_changed" from="HealthPlayer" to="." method="_on_health_changed"]
-[connection signal="health_depleted" from="HealthPlayer" to="." method="_on_health_depleted"]
-[connection signal="picked_up_weapon" from="PickupManager" to="WeaponManager" method="_on_picked_up_weapon"]
+[node name="HealthManager" type="Node2D" parent="."]
+script = ExtResource("2_fkybt")
+
+[node name="StatManager" type="Node2D" parent="."]
+script = ExtResource("5_7dp3o")
+
+[node name="WeaponManager" type="Node2D" parent="."]
+script = ExtResource("5_fkybt")
+equipped_weapon_data = ExtResource("14_7dp3o")
+metadata/_custom_type_script = "uid://blderps2wltnx"
+
+[node name="PickupManager" type="Node2D" parent="."]
+script = ExtResource("12_ukyrk")
+
 [connection signal="area_entered" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_entered"]
 [connection signal="area_exited" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_exited"]
+[connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
+[connection signal="health_depleted" from="HealthManager" to="." method="_on_health_depleted"]
+[connection signal="attack_speed_changed" from="StatManager" to="WeaponManager" method="_on_attack_speed_changed"]
+[connection signal="crit_chance_changed" from="StatManager" to="WeaponManager" method="_on_crit_chance_changed"]
+[connection signal="intelligence_changed" from="StatManager" to="WeaponManager" method="_on_intelligence_changed"]
+[connection signal="movement_speed_changed" from="StatManager" to="." method="_on_movement_speed_changed"]
+[connection signal="strength_changed" from="StatManager" to="WeaponManager" method="_on_strength_changed"]
+[connection signal="picked_up_weapon" from="PickupManager" to="WeaponManager" method="_on_picked_up_weapon"]

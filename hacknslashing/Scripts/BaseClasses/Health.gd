@@ -1,5 +1,5 @@
-class_name Health
 extends Node2D
+class_name Health
 
 signal max_health_changed(diff: int)
 signal health_changed(diff: int)
@@ -21,9 +21,6 @@ func set_max_health(value: int):
 		if health > max_health:
 			health = max_health
 
-func get_max_health() -> int:
-	return max_health
-
 func set_health(value: int):
 	var clamped_value = clampi(value, 0, max_health)
 	if clamped_value != health:
@@ -34,6 +31,9 @@ func set_health(value: int):
 		
 		if health == 0:
 			health_depleted.emit()
+
+func get_max_health() -> int:
+	return max_health
 
 func get_health() -> int:
 	return health

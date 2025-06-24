@@ -13,7 +13,8 @@ func send_item_data() -> PickupResource:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	pickup_text.visible = true
+	if area.name == "PickupHitBox":
+		pickup_text.visible = true
 
 
 func _on_area_exited(area: Area2D) -> void:
