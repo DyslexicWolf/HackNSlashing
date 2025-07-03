@@ -8,10 +8,10 @@ var previous_item : InventoryItem = null
 signal item_unequipped(item : InventoryItem)
 signal item_equipped(item : InventoryItem)
 
+
 func initialize(t: ItemResource.Type, cms: Vector2) -> void:
 	type = t
 	custom_minimum_size = cms
-
 
 #this function checks if what we are dragging can be dropped into the slot we are hovering
 #data is the item that we are dragging around with our mouse
@@ -30,7 +30,6 @@ func _can_drop_data(at_position: Vector2, data: Variant):
 	else:
 		return data.item_data.type == type
 	return false
-
 
 #this function drops the item into the inventory slot after _can_drop_data has been called and returned true
 func _drop_data(at_position: Vector2, data: Variant):

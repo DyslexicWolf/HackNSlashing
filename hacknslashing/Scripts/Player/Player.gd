@@ -42,4 +42,5 @@ func _on_health_depleted() -> void:
 
 func _on_movement_speed_changed(new_value: int) -> void:
 	#temporary calculation
-	speed += new_value
+	#speed += new_value
+	pass

@@ -372,13 +372,12 @@ shape = SubResource("CapsuleShape2D_x3wgy")
 
 [node name="WeaponHitBox" type="Area2D" parent="."]
 collision_mask = 2
-monitoring = false
-monitorable = false
 script = ExtResource("6_f1ek2")
 metadata/_custom_type_script = "uid://fkv3qen78uqk"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]
 polygon = PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)
+disabled = true
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -403,13 +402,13 @@ shape = SubResource("CapsuleShape2D_7dp3o")
 [node name="HealthManager" type="Node2D" parent="."]
 script = ExtResource("2_fkybt")
 
-[node name="StatManager" type="Node2D" parent="."]
-script = ExtResource("5_7dp3o")
-
 [node name="WeaponManager" type="Node2D" parent="."]
 script = ExtResource("5_fkybt")
 equipped_weapon_data = ExtResource("14_7dp3o")
 metadata/_custom_type_script = "uid://blderps2wltnx"
+
+[node name="StatManager" type="Node2D" parent="."]
+script = ExtResource("5_7dp3o")
 
 [node name="PickupManager" type="Node2D" parent="."]
 script = ExtResource("12_ukyrk")
@@ -419,7 +418,9 @@ script = ExtResource("12_ukyrk")
 [connection signal="area_exited" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_exited"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_health_depleted"]
+[connection signal="armor_changed" from="StatManager" to="HealthManager" method="_on_armor_changed"]
 [connection signal="attack_speed_changed" from="StatManager" to="WeaponManager" method="_on_attack_speed_changed"]
+[connection signal="constitution_changed" from="StatManager" to="HealthManager" method="_on_constitution_changed"]
 [connection signal="crit_chance_changed" from="StatManager" to="WeaponManager" method="_on_crit_chance_changed"]
 [connection signal="intelligence_changed" from="StatManager" to="WeaponManager" method="_on_intelligence_changed"]
 [connection signal="movement_speed_changed" from="StatManager" to="." method="_on_movement_speed_changed"]

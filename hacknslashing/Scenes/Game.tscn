@@ -56,3 +56,4 @@ position = Vector2(67, 12)
 pickResource = ExtResource("6_7lihs")
 
 [node name="Inventory" parent="." instance=ExtResource("7_1l0tm")]
+visible = false

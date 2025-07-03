@@ -15,6 +15,8 @@ var luck: int : set = set_luck, get = get_luck
 
 var armor: int : set = set_armor, get = get_armor
 var movement_speed: int : set = set_movement_speed, get = get_movement_speed
+#this value changes the attack animation speed, which intern makes the character attack faster or slower
+#we DO NOT have an attackspeed value in other scripts, look for attack animation speed
 var attack_speed: int : set = set_attack_speed, get = get_attack_speed
 var crit_chance: int : set = set_crit_chance, get = get_attack_speed
 
@@ -104,7 +106,7 @@ func _ready() -> void:
 	luck = 10
 	armor = 15
 	movement_speed = 130
-	attack_speed = 1
+	attack_speed = 0
 	crit_chance = 5
 
 

@@ -2,6 +2,7 @@ extends Health
 
 var immortality: bool = false : set = set_immortality, get = get_immortality
 var immortality_timer: Timer = null
+var current_armor: int
 enum DamageType {PHYSICAL, ELEMENTAL}
 
 func _ready() -> void:
@@ -48,11 +49,20 @@ func set_temporary_immortality(time: float):
 
 
 func _on_received_damage(damage: int, damage_type: DamageType) -> void:
-	#calculate the damage taken here based on damage type and damage amount
+	#temp calculation with testing values
 	if damage_type == DamageType.PHYSICAL:
-		print("i just took physical damage, awtch")
+		var mitigation := current_armor / (current_armor + 100.0)
+		var reduced_damage := damage * (1 - mitigation)
+		health -= reduced_damage
+	elif damage_type == DamageType.ELEMENTAL:
+		#Elemental resistance can be added here if wanted
 		health -= damage
-	
-	if damage_type == DamageType.ELEMENTAL:
-		print("i just took elemental damage, goddamn")
-		health -= damage
+
+func _on_constitution_changed(new_value: int) -> void:
+	#temp calculation with testing values
+	var base_health := 20
+	var scaling := 10
+	max_health = base_health + new_value * scaling
+
+func _on_armor_changed(new_value: int) -> void:
+	current_armor = new_value
