@@ -6,7 +6,6 @@ extends Node2D
 @onready var weapon_sprite = $"../WeaponSprite"
 var weapon_animation_player = null
 var weapon_hitbox = null
-var weapon_hitbox_shape = null
 var player_object = null
 
 var is_attacking: bool = false : set = set_is_attacking, get = get_is_attacking
@@ -34,7 +33,6 @@ func _ready() -> void:
 	player_object = get_parent()
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_hitbox = $"../WeaponHitBox"
-	weapon_hitbox_shape = $"../WeaponHitBox/CollisionPolygon2D"
 	_load_weapon(equipped_weapon_data)
 
 func _load_weapon(new_weapon_data : WeaponResource):
@@ -48,27 +46,33 @@ func _load_weapon(new_weapon_data : WeaponResource):
 		weapon_animation_player.animation_finished.connect(on_animation_finished)
 	#assign a temp value, this will be overwritten once the statmanager signals trigger
 	weapon_hitbox.damage = calculated_physical_damage
+	weapon_hitbox.elemental_damage = calculated_elemental_damage
+	weapon_hitbox.damage_type = equipped_weapon_data.damage_type
 
 #call this in _physics_process function in child classes
-func _physics_process(delta : float):
-	#look into the other "action pressed" methods if this doesnt feel right
+func _physics_process(_delta : float):
 	get_animation_specifics()
 	if Input.is_action_pressed("attack", false) and can_attack and !is_attacking:
 		is_attacking = true
 		can_attack = false
 		calculate_crit()
-		weapon_hitbox_shape.disabled = false
-		#weapon_hitbox.monitoring = true
-		#weapon_hitbox.monitorable = true
 		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, calculated_attack_animation_speed, false)
 	elif !is_attacking:
 		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 
+# These methods will be called by AnimationPlayer via animation notifies (call_method tracks)
+func start_attack_hitbox():
+	print("start attack hitbox")
+	weapon_hitbox.monitoring = true
+	weapon_hitbox.monitorable = true
+
+func end_attack_hitbox():
+	print("end attack hitbox")
+	weapon_hitbox.monitoring = false
+	weapon_hitbox.monitorable = false
+
 func on_animation_finished(animation_name : String):
 	if animation_name == equipped_weapon_data.attack_animation:
-		weapon_hitbox_shape.disabled = true
-		#weapon_hitbox.monitoring = false
-		#weapon_hitbox.monitorable = false
 		is_attacking = false
 		can_attack = true
 
@@ -100,14 +104,14 @@ func _on_picked_up_weapon(weapon: WeaponResource) -> void:
 func _on_strength_changed(new_value: int) -> void:
 	#temp calculation with testing values
 	var scaling_factor := 0.05
-	calculated_physical_damage = equipped_weapon_data.base_damage * (1 + new_value * scaling_factor)
+	calculated_physical_damage = int(equipped_weapon_data.base_damage * (1 + new_value * scaling_factor))
 	if weapon_hitbox != null:
 		weapon_hitbox.damage = calculated_physical_damage
 
 func _on_intelligence_changed(new_value: int) -> void:
 	#temp calculation with testing values
 	var scaling_factor := 0.07
-	calculated_elemental_damage = equipped_weapon_data.base_elemental_damage * (1 + new_value * scaling_factor)
+	calculated_elemental_damage = int(equipped_weapon_data.base_elemental_damage * (1 + new_value * scaling_factor))
 	if weapon_hitbox != null:
 		weapon_hitbox.elemental_damage = calculated_elemental_damage
 
@@ -115,7 +119,7 @@ func _on_crit_chance_changed(new_value: int) -> void:
 	#temp calculation with testing values
 	var base_value := equipped_weapon_data.base_crit_chance
 	var scaling := 0.0025
-	calculated_crit_chance = base_value + new_value * scaling
+	calculated_crit_chance = int(base_value + new_value * scaling)
 
 func _on_attack_speed_changed(new_value: int) -> void:
 	#temp calculation with testing values

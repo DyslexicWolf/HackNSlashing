@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=4 uid="uid://b36cyrcp3ikk1"]
 
-[ext_resource type="PackedScene" uid="uid://bmjs8ru7k3ke" path="res://Scenes/player.tscn" id="1_b2bpf"]
-[ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/slime.tscn" id="3_fgofq"]
+[ext_resource type="PackedScene" uid="uid://bmjs8ru7k3ke" path="res://Scenes/Player.tscn" id="1_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/Slime.tscn" id="3_fgofq"]
 [ext_resource type="Texture2D" uid="uid://cn2go4fwinlgv" path="res://Assets/Sprites/Tileset_Dungeon_SpriteSheet.png" id="4_2irst"]
-[ext_resource type="PackedScene" uid="uid://c60abfvxmm4ly" path="res://Scenes/pickupItem.tscn" id="5_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://c60abfvxmm4ly" path="res://Scenes/PickupItem.tscn" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://bu04ynlcfou8u" path="res://Scripts/BaseClasses/ItemSpawner.gd" id="5_bf53h"]
 [ext_resource type="Resource" uid="uid://cci81q02skv3g" path="res://Resources/SwordPickupResource.tres" id="6_7lihs"]
-[ext_resource type="PackedScene" uid="uid://8ts5e0ysiveh" path="res://Scenes/inventory.tscn" id="7_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://8ts5e0ysiveh" path="res://Scenes/Inventory.tscn" id="7_1l0tm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("4_2irst")
@@ -56,4 +56,3 @@ position = Vector2(67, 12)
 pickResource = ExtResource("6_7lihs")
 
 [node name="Inventory" parent="." instance=ExtResource("7_1l0tm")]
-visible = false

@@ -303,38 +303,26 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("WeaponSprite:frame_coords")
+tracks/3/path = NodePath("WeaponHitBox/CollisionPolygon2D:polygon")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(5, 0)]
+"update": 0,
+"values": [PackedVector2Array(22, 9, 21, 1, 14, -12, 10, -15, -4, -15, -11, -13, -18, -7, -23, -1, -24, 9)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponHitBox/CollisionPolygon2D:polygon")
+tracks/4/path = NodePath("WeaponHitBox/CollisionPolygon2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("WeaponHitBox/CollisionPolygon2D:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7dp3o"]
@@ -372,12 +360,13 @@ shape = SubResource("CapsuleShape2D_x3wgy")
 
 [node name="WeaponHitBox" type="Area2D" parent="."]
 collision_mask = 2
+monitoring = false
+monitorable = false
 script = ExtResource("6_f1ek2")
 metadata/_custom_type_script = "uid://fkv3qen78uqk"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]
-polygon = PackedVector2Array(3, -4, 3, -32, -4, -32, -4, -4)
-disabled = true
+polygon = PackedVector2Array(22, 9, 21, 1, 14, -12, 10, -15, -4, -15, -11, -13, -18, -7, -23, -1, -24, 9)
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -388,7 +377,6 @@ libraries = {
 z_index = -1
 texture = ExtResource("9_pu2lt")
 hframes = 10
-frame = 5
 
 [node name="PickupHitBox" type="Area2D" parent="."]
 collision_mask = 4

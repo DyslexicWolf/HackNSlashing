@@ -7,6 +7,8 @@ signal health_depleted
 
 var max_health: int  : set = set_max_health, get = get_max_health
 var health: int : set = set_health, get = get_health
+var current_armor: int
+enum DamageType {PHYSICAL, ELEMENTAL}
 
 func set_max_health(value: int):
 	#clampedvalue is 1 if you set maxhealth = 0 else it is the value provided
@@ -37,3 +39,13 @@ func get_max_health() -> int:
 
 func get_health() -> int:
 	return health
+
+func _on_received_damage(damage: int, damage_type: DamageType) -> void:
+	#temp calculation with testing values
+	if damage_type == DamageType.PHYSICAL:
+		var mitigation := current_armor / (current_armor + 100.0)
+		var reduced_damage := damage * (1 - mitigation)
+		health -= reduced_damage
+	elif damage_type == DamageType.ELEMENTAL:
+		#Elemental resistance can be added here if wanted
+		health -= damage
