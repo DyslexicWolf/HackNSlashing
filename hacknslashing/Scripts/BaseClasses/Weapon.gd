@@ -6,6 +6,7 @@ extends Node2D
 @onready var weapon_sprite = $"../WeaponSprite"
 var weapon_animation_player = null
 var weapon_hitbox = null
+var weapon_hitbox_area = null
 var player_object = null
 
 var is_attacking: bool = false : set = set_is_attacking, get = get_is_attacking
@@ -33,6 +34,7 @@ func _ready() -> void:
 	player_object = get_parent()
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_hitbox = $"../WeaponHitBox"
+	weapon_hitbox_area = $"../WeaponHitBox/CollisionPolygon2D"
 	_load_weapon(equipped_weapon_data)
 
 func _load_weapon(new_weapon_data : WeaponResource):
@@ -56,26 +58,19 @@ func _physics_process(_delta : float):
 		is_attacking = true
 		can_attack = false
 		calculate_crit()
+		weapon_hitbox.monitoring = true
+		weapon_hitbox.monitorable = true
 		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, calculated_attack_animation_speed, false)
 	elif !is_attacking:
 		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
 
-# These methods will be called by AnimationPlayer via animation notifies (call_method tracks)
-func start_attack_hitbox():
-	print("start attack hitbox")
-	weapon_hitbox.monitoring = true
-	weapon_hitbox.monitorable = true
-
-func end_attack_hitbox():
-	print("end attack hitbox")
-	weapon_hitbox.monitoring = false
-	weapon_hitbox.monitorable = false
-
 func on_animation_finished(animation_name : String):
 	if animation_name == equipped_weapon_data.attack_animation:
+		weapon_hitbox.monitoring = false
+		weapon_hitbox.monitorable = false
 		is_attacking = false
 		can_attack = true
-
+		
 func get_animation_specifics():
 	var mouse_position = get_global_mouse_position()
 	# Calculate the direction vector from the player to the mouse
@@ -126,4 +121,4 @@ func _on_attack_speed_changed(new_value: int) -> void:
 	var base_attack_rate := equipped_weapon_data.attack_animation_speed
 	var scaling := 0.01
 	calculated_attack_animation_speed = base_attack_rate * (1 + new_value * scaling)
-	print(calculated_attack_animation_speed)
+	

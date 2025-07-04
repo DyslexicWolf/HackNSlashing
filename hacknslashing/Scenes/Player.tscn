@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/HealthPlayer.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
 [ext_resource type="Script" uid="uid://dspjoevq5x4ee" path="res://Scripts/Player/HurtboxPlayer.gd" id="4_fkybt"]
+[ext_resource type="Script" uid="uid://cbgk783ujah1c" path="res://Scripts/Player/WeaponHitbox.gd" id="4_o3h8g"]
 [ext_resource type="Script" uid="uid://b1dbhhn36a5bw" path="res://Scripts/Player/StatManager.gd" id="5_7dp3o"]
 [ext_resource type="Script" uid="uid://blderps2wltnx" path="res://Scripts/BaseClasses/Weapon.gd" id="5_fkybt"]
-[ext_resource type="Script" uid="uid://fkv3qen78uqk" path="res://Scripts/BaseClasses/Hitbox.gd" id="6_f1ek2"]
 [ext_resource type="Animation" uid="uid://drcuhqst63m7t" path="res://Assets/Animations/SwordIdleAnimation.res" id="7_tx1dd"]
 [ext_resource type="Animation" uid="uid://bmh1xjk5e3wxs" path="res://Assets/Animations/SwordAttackAnimation.res" id="8_gymyn"]
 [ext_resource type="Animation" uid="uid://bi284q4moaecs" path="res://Assets/Animations/SpearIdleAnimation.res" id="9_gymyn"]
@@ -312,18 +312,6 @@ tracks/3/keys = {
 "update": 0,
 "values": [PackedVector2Array(22, 9, 21, 1, 14, -12, 10, -15, -4, -15, -11, -13, -18, -7, -23, -1, -24, 9)]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("WeaponHitBox/CollisionPolygon2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7dp3o"]
 _data = {
@@ -362,7 +350,7 @@ shape = SubResource("CapsuleShape2D_x3wgy")
 collision_mask = 2
 monitoring = false
 monitorable = false
-script = ExtResource("6_f1ek2")
+script = ExtResource("4_o3h8g")
 metadata/_custom_type_script = "uid://fkv3qen78uqk"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]

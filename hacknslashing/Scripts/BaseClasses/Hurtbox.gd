@@ -2,25 +2,25 @@ extends Area2D
 class_name HurtBox
 
 signal received_damage(damage: int, damage_type: int)
-#var hurtbox : Area2D = null
-#var already_hit_boxes : Array = []
 
-#connect the onareaentered fucntion to the area_entered signal (otherwise you would have to do this manually for every instance of the hurtboxes you have
-#call in _ready function in child classes
+var _damage_cooldowns := {}
+
 func preload_variables() -> void:
-	connect("area_entered", _on_area_entered)
+	set_process(true)
 
-#we take area2d as argument so we stay general and the doesnt error, after we check if it is a hitbox
-func _on_area_entered(hitbox: Area2D) -> void:
-	print("in area entered")
-	if  hitbox is HitBox:
-		print(self.name + " got hit")
-		received_damage.emit(hitbox.damage, hitbox.damage_type)
+func _physics_process(delta: float) -> void:
+	var overlapping = get_overlapping_areas()
+	for area in overlapping:
+		if area is HitBox:
+			print(area.name)
+			if not _damage_cooldowns.has(area):
+				_damage_cooldowns[area] = 0.0
+			_damage_cooldowns[area] -= delta
+			if _damage_cooldowns[area] <= 0.0:
+				received_damage.emit(area.damage, area.damage_type)
+				_damage_cooldowns[area] = 1.0  # 1 second cooldown
 
-#func overlapping_hitboxes() -> void:
-	#for area in hurtbox.get_overlapping_areas():
-		#if area is HitBox and !already_hit_boxes.has(area):
-			#print(self.name + " got hit")
-			#health.health -= area.damage
-			#received_damage.emit(area.damage)
-			#already_hit_boxes.append(area)
+	# Clean up cooldowns for hitboxes that are no longer overlapping
+	for area in _damage_cooldowns.keys():
+		if area not in overlapping:
+			_damage_cooldowns.erase(area)
