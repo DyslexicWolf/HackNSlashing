@@ -309,8 +309,20 @@ tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [PackedVector2Array(22, 9, 21, 1, 14, -12, 10, -15, -4, -15, -11, -13, -18, -7, -23, -1, -24, 9)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponHitBox/CollisionPolygon2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7dp3o"]
@@ -348,13 +360,12 @@ shape = SubResource("CapsuleShape2D_x3wgy")
 
 [node name="WeaponHitBox" type="Area2D" parent="."]
 collision_mask = 2
-monitoring = false
-monitorable = false
 script = ExtResource("4_o3h8g")
 metadata/_custom_type_script = "uid://fkv3qen78uqk"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WeaponHitBox"]
 polygon = PackedVector2Array(22, 9, 21, 1, 14, -12, 10, -15, -4, -15, -11, -13, -18, -7, -23, -1, -24, 9)
+disabled = true
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -390,6 +401,7 @@ script = ExtResource("5_7dp3o")
 script = ExtResource("12_ukyrk")
 
 [connection signal="received_damage" from="HurtBoxPlayer" to="HealthManager" method="_on_received_damage"]
+[connection signal="area_entered" from="WeaponHitBox" to="WeaponManager" method="_on_weapon_hit_box_area_entered"]
 [connection signal="area_entered" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_entered"]
 [connection signal="area_exited" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_exited"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]

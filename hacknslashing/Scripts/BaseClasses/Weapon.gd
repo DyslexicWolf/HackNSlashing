@@ -6,7 +6,6 @@ extends Node2D
 @onready var weapon_sprite = $"../WeaponSprite"
 var weapon_animation_player = null
 var weapon_hitbox = null
-var weapon_hitbox_area = null
 var player_object = null
 
 var is_attacking: bool = false : set = set_is_attacking, get = get_is_attacking
@@ -34,7 +33,9 @@ func _ready() -> void:
 	player_object = get_parent()
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_hitbox = $"../WeaponHitBox"
-	weapon_hitbox_area = $"../WeaponHitBox/CollisionPolygon2D"
+	weapon_hitbox.monitoring = true
+	weapon_hitbox.monitorable = true
+	# weapon_hitbox.get_node("CollisionPolygon2D").disabled = false
 	_load_weapon(equipped_weapon_data)
 
 func _load_weapon(new_weapon_data : WeaponResource):
@@ -58,16 +59,13 @@ func _physics_process(_delta : float):
 		is_attacking = true
 		can_attack = false
 		calculate_crit()
-		weapon_hitbox.monitoring = true
-		weapon_hitbox.monitorable = true
 		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, calculated_attack_animation_speed, false)
 	elif !is_attacking:
 		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
+	
 
 func on_animation_finished(animation_name : String):
 	if animation_name == equipped_weapon_data.attack_animation:
-		weapon_hitbox.monitoring = false
-		weapon_hitbox.monitorable = false
 		is_attacking = false
 		can_attack = true
 		
@@ -86,6 +84,16 @@ func get_animation_specifics():
 	# Calculate the new position of the sword based on the angle
 	weapon_sprite.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
 	weapon_hitbox.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
+
+func _on_weapon_hit_box_area_entered(area: Area2D) -> void:
+	print("in _on_weapon_hit_box_area_entered")
+	if area is HurtBox:
+		var hurtbox = area as HurtBox
+		#possible additional checks here,  "and hurtbox.is_player == false"
+		if hurtbox != null:
+			hurtbox.take_damage(calculated_physical_damage, weapon_hitbox.damage_type)
+			#emit a signal for the player to know that it hit an enemy (example) for sound etc
+			# player_object.weapon_hit_enemy.emit(hurtbox, calculated_physical_damage, weapon_hitbox.damage_type)
 
 func calculate_crit() -> void:
 	pass
@@ -121,4 +129,3 @@ func _on_attack_speed_changed(new_value: int) -> void:
 	var base_attack_rate := equipped_weapon_data.attack_animation_speed
 	var scaling := 0.01
 	calculated_attack_animation_speed = base_attack_rate * (1 + new_value * scaling)
-	

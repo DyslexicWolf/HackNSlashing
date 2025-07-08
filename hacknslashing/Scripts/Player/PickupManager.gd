@@ -9,6 +9,7 @@ signal picked_up_weapon(weapon : WeaponResource)
 #signal picked_up_charm
 
 func _input(event: InputEvent) -> void:
+	#add pickup logic for different kinds of items
 	if event.is_action_pressed("pickup") && can_pickup : 
 		picked_up_weapon.emit(pickup_item.weapon_resource)
 		parent.queue_free()
