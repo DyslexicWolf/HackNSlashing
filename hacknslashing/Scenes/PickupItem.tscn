@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c60abfvxmm4ly"]
+[gd_scene load_steps=6 format=3 uid="uid://c60abfvxmm4ly"]
 
 [ext_resource type="Script" uid="uid://c07027hrt2jna" path="res://Scripts/BaseClasses/PickupItem.gd" id="1_qtdd8"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_uji84"]
+[ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="2_xl4vt"]
 [ext_resource type="FontFile" uid="uid://p5h64qviim8" path="res://Resources/ResourceBlueprints/PixelOperator8.ttf" id="3_nwm7s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ipw6"]
@@ -9,6 +10,8 @@ radius = 19.0263
 
 [node name="PickupItem" type="Node2D"]
 script = ExtResource("1_qtdd8")
+item_resource = ExtResource("2_xl4vt")
+metadata/_custom_type_script = "uid://c07027hrt2jna"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_uji84")

@@ -377,10 +377,11 @@ z_index = -1
 texture = ExtResource("9_pu2lt")
 hframes = 10
 
-[node name="PickupHitBox" type="Area2D" parent="."]
+[node name="PickupManager" type="Area2D" parent="."]
 collision_mask = 4
+script = ExtResource("12_ukyrk")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupHitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupManager"]
 shape = SubResource("CapsuleShape2D_o3h8g")
 
 [node name="MovementBox" type="CollisionShape2D" parent="."]
@@ -397,13 +398,9 @@ metadata/_custom_type_script = "uid://blderps2wltnx"
 [node name="StatManager" type="Node2D" parent="."]
 script = ExtResource("5_7dp3o")
 
-[node name="PickupManager" type="Node2D" parent="."]
-script = ExtResource("12_ukyrk")
-
 [connection signal="received_damage" from="HurtBoxPlayer" to="HealthManager" method="_on_received_damage"]
 [connection signal="area_entered" from="WeaponHitBox" to="WeaponManager" method="_on_weapon_hit_box_area_entered"]
-[connection signal="area_entered" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_entered"]
-[connection signal="area_exited" from="PickupHitBox" to="PickupManager" method="_on_pickup_hit_box_area_exited"]
+[connection signal="picked_up_weapon" from="PickupManager" to="WeaponManager" method="_on_picked_up_weapon"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_health_depleted"]
 [connection signal="armor_changed" from="StatManager" to="HealthManager" method="_on_armor_changed"]
@@ -413,4 +410,3 @@ script = ExtResource("12_ukyrk")
 [connection signal="intelligence_changed" from="StatManager" to="WeaponManager" method="_on_intelligence_changed"]
 [connection signal="movement_speed_changed" from="StatManager" to="." method="_on_movement_speed_changed"]
 [connection signal="strength_changed" from="StatManager" to="WeaponManager" method="_on_strength_changed"]
-[connection signal="picked_up_weapon" from="PickupManager" to="WeaponManager" method="_on_picked_up_weapon"]

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var sword_pickup : PickupResource
+@export var sword_pickup : ItemResource
 var pickup_scene = preload("res://Scenes/PickupItem.tscn")
 
 func _ready() -> void:

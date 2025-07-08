@@ -1,25 +1,42 @@
-extends Node2D
+extends Area2D
 
-var pickup_item: PickupResource
-var parent
-var can_pickup : bool = false
+var pickup_items: Array[PickupItem] = []
+
 signal picked_up_weapon(weapon : WeaponResource)
 
-#example of other signals we will need
-#signal picked_up_charm
+signal picked_up_scroll(scroll : ScrollResource)
+
+signal picked_up_armor(armor : ArmorResource)
+
+
+func _ready():
+	connect("area_entered", _on_area_entered)
+	connect("area_exited", _on_area_exited)
+
+func _on_area_entered(area):
+	var parent = area.get_parent()
+	if parent is PickupItem:
+		if parent not in pickup_items:
+			pickup_items.append(parent)
+
+func _on_area_exited(area):
+	var parent = area.get_parent()
+	if parent is PickupItem:
+		if parent in pickup_items:
+			pickup_items.erase(parent)
+
 
 func _input(event: InputEvent) -> void:
 	#add pickup logic for different kinds of items
-	if event.is_action_pressed("pickup") && can_pickup : 
-		picked_up_weapon.emit(pickup_item.weapon_resource)
-		parent.queue_free()
-
-
-func _on_pickup_hit_box_area_entered(area: Area2D) -> void:
-	parent = area.get_parent()
-	pickup_item = parent.send_item_data()
-	can_pickup = true
-
-
-func _on_pickup_hit_box_area_exited(area: Area2D) -> void:
-	can_pickup = false
+	if event.is_action_pressed("pickup"):
+		if pickup_items.size() != 0:
+			var first_pickup = pickup_items[0]
+			var item = first_pickup.item_resource
+			if item is WeaponResource:
+				picked_up_weapon.emit(item as WeaponResource)
+			elif item is ScrollResource:
+				picked_up_scroll.emit(item as ScrollResource)
+			elif item is ArmorResource:
+				picked_up_armor.emit(item as ArmorResource)
+			pickup_items.erase(first_pickup)
+			first_pickup.queue_free()

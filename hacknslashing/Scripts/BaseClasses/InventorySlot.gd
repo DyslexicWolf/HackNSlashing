@@ -15,7 +15,7 @@ func initialize(t: ItemResource.Type, cms: Vector2) -> void:
 
 #this function checks if what we are dragging can be dropped into the slot we are hovering
 #data is the item that we are dragging around with our mouse
-func _can_drop_data(at_position: Vector2, data: Variant):
+func _can_drop_data(_at_position: Vector2, data: Variant):
 	if data is InventoryItem:
 		var item_type = data.item_data.type
 		if item_type != type:
@@ -29,10 +29,9 @@ func _can_drop_data(at_position: Vector2, data: Variant):
 		return get_child(0).data.type == data.item_data.type
 	else:
 		return data.item_data.type == type
-	return false
 
 #this function drops the item into the inventory slot after _can_drop_data has been called and returned true
-func _drop_data(at_position: Vector2, data: Variant):
+func _drop_data(_at_position: Vector2, _data: Variant):
 	# If there's already an item, handle swapping
 	if get_child_count() > 0:
 		var existing_item := get_child(0)

@@ -7,7 +7,7 @@ func _ready() -> void:
 	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	if item_data != null:
-		texture = item_data.inventory_texture
+		texture = item_data.ui_texture
 		tooltip_text = "%s\n%s" % [item_data.name, item_data.description]
 
 func initialize(d: ItemResource) -> void:
@@ -20,7 +20,7 @@ func _get_drag_item_data(at_position: Vector2):
 
 func make_drag_preview(at_position: Vector2):
 	var t := TextureRect.new()
-	t.texture = item_data.inventory_texture
+	t.texture = item_data.ui_texture
 	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	t.custom_minimum_size = size
