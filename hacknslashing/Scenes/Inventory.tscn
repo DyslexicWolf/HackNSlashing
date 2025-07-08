@@ -1,13 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://8ts5e0ysiveh"]
 
-[ext_resource type="Script" uid="uid://bvxnckrtg5y85" path="res://InventoryGUI.gd" id="1_wdn4f"]
+[ext_resource type="Script" uid="uid://bvxnckrtg5y85" path="res://Scripts/BaseClasses/InventoryGUI.gd" id="1_wdn4f"]
 [ext_resource type="Script" uid="uid://b7ei01shbynak" path="res://Scripts/BaseClasses/InventorySlot.gd" id="2_yxepq"]
 [ext_resource type="Script" uid="uid://cqscdvvf8idko" path="res://Scripts/BaseClasses/InventoryItem.gd" id="3_0n8tc"]
 
 [node name="Inventory" type="Node2D"]
 
 [node name="GUI" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("1_wdn4f")
 
 [node name="Panel" type="Panel" parent="GUI"]

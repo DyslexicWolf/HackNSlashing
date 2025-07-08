@@ -6,14 +6,16 @@ class_name InventoryItem
 func _ready() -> void:
 	expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	
+
+func initialize(d: ItemResource) -> void:
+	item_data = d
 	if item_data != null:
 		texture = item_data.ui_texture
 		tooltip_text = "%s\n%s" % [item_data.name, item_data.description]
 
-func initialize(d: ItemResource) -> void:
-	item_data = d
 
-func _get_drag_item_data(at_position: Vector2):
+func _get_drag_data(at_position: Vector2):
 	print("in get drag")
 	set_drag_preview(make_drag_preview(at_position))
 	return self

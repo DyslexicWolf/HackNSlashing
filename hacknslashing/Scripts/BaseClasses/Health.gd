@@ -45,7 +45,7 @@ func _on_received_damage(damage: int, damage_type: DamageType) -> void:
 	if damage_type == DamageType.PHYSICAL:
 		var mitigation := current_armor / (current_armor + 100.0)
 		var reduced_damage := damage * (1 - mitigation)
-		health -= reduced_damage
+		health -= int(reduced_damage)
 	elif damage_type == DamageType.ELEMENTAL:
 		#Elemental resistance can be added here if wanted
 		health -= damage

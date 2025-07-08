@@ -86,12 +86,12 @@ func get_animation_specifics():
 	weapon_hitbox.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
 
 func _on_weapon_hit_box_area_entered(area: Area2D) -> void:
-	print("in _on_weapon_hit_box_area_entered")
 	if area is HurtBox:
 		var hurtbox = area as HurtBox
-		#possible additional checks here,  "and hurtbox.is_player == false"
+		#possible additional checks here if we come across problems,  "and hurtbox.is_player == false"
 		if hurtbox != null:
 			hurtbox.take_damage(calculated_physical_damage, weapon_hitbox.damage_type)
+
 			#emit a signal for the player to know that it hit an enemy (example) for sound etc
 			# player_object.weapon_hit_enemy.emit(hurtbox, calculated_physical_damage, weapon_hitbox.damage_type)
 
