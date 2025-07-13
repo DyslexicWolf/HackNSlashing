@@ -1,12 +1,12 @@
-extends PanelContainer
-class_name InventorySlot
+extends InventorySlot
+class_name EquipementSlot
 
-@export var type : ItemResource.Type
-var previous_item : InventoryItem = null
 
-func initialize(t: ItemResource.Type, cms: Vector2) -> void:
-	type = t
-	custom_minimum_size = cms
+@export var slot_index : int = -1
+
+signal item_unequipped(item : InventoryItem, slot_index : int)
+signal item_equipped(item : InventoryItem, slot_index : int)
+
 
 # Checks if the dragged item can be dropped into this slot
 func _can_drop_data(_at_position: Vector2, data: Variant):
@@ -36,7 +36,9 @@ func _drop_data(_at_position: Vector2, data: Variant):
 			existing_item.get_parent().remove_child(existing_item)
 			if new_slot:
 				new_slot.get_parent().add_child(existing_item)
+			item_unequipped.emit(previous_item, slot_index)
 		
 		#Move the dragged item into this slot
 		data.get_parent().remove_child(data)
 		add_child(data)
+		item_equipped.emit(data, slot_index)

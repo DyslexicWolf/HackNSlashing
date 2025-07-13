@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bmjs8ru7k3ke"]
+[gd_scene load_steps=53 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/Player.gd" id="1_cvnsp"]
 [ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/HealthPlayer.gd" id="2_fkybt"]
@@ -13,9 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="9_pu2lt"]
 [ext_resource type="Animation" uid="uid://bmktlnjq6806i" path="res://Assets/Animations/SpearAttackAnimation.res" id="10_pu2lt"]
 [ext_resource type="Script" uid="uid://tl0o0rhrhmer" path="res://Scripts/Player/PickupManager.gd" id="12_ukyrk"]
-[ext_resource type="Resource" uid="uid://lk73u83ckawr" path="res://Resources/SpearResource.tres" id="14_7dp3o"]
+[ext_resource type="Script" uid="uid://c0lr47ujesboj" path="res://Scripts/BaseClasses/EquipementSlot.gd" id="15_arntx"]
 [ext_resource type="Script" uid="uid://bvxnckrtg5y85" path="res://Scripts/Player/InventoryManager.gd" id="16_1iu4k"]
-[ext_resource type="Script" uid="uid://b7ei01shbynak" path="res://Scripts/BaseClasses/InventorySlot.gd" id="17_m0x7a"]
 [ext_resource type="Script" uid="uid://cqscdvvf8idko" path="res://Scripts/BaseClasses/InventoryItem.gd" id="18_5v66d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3wgy"]
@@ -395,7 +394,6 @@ script = ExtResource("2_fkybt")
 
 [node name="WeaponManager" type="Node2D" parent="."]
 script = ExtResource("5_fkybt")
-equipped_weapon_data = ExtResource("14_7dp3o")
 metadata/_custom_type_script = "uid://blderps2wltnx"
 
 [node name="StatManager" type="Node2D" parent="."]
@@ -431,7 +429,8 @@ layout_mode = 2
 [node name="WeaponSlot1" type="PanelContainer" parent="InventoryManager/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-script = ExtResource("17_m0x7a")
+script = ExtResource("15_arntx")
+slot_index = 0
 type = 1
 
 [node name="Weapon1" type="TextureRect" parent="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot1"]
@@ -441,7 +440,8 @@ script = ExtResource("18_5v66d")
 [node name="WeaponSlot2" type="PanelContainer" parent="InventoryManager/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-script = ExtResource("17_m0x7a")
+script = ExtResource("15_arntx")
+slot_index = 1
 type = 1
 
 [node name="Weapon2" type="TextureRect" parent="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot2"]
@@ -460,3 +460,8 @@ script = ExtResource("18_5v66d")
 [connection signal="intelligence_changed" from="StatManager" to="WeaponManager" method="_on_intelligence_changed"]
 [connection signal="movement_speed_changed" from="StatManager" to="." method="_on_movement_speed_changed"]
 [connection signal="strength_changed" from="StatManager" to="WeaponManager" method="_on_strength_changed"]
+[connection signal="weapon_equipped" from="InventoryManager" to="WeaponManager" method="_on_weapon_equipped"]
+[connection signal="item_equipped" from="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot1" to="InventoryManager" method="_on_item_equipped"]
+[connection signal="item_unequipped" from="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot1" to="InventoryManager" method="_on_item_unequipped"]
+[connection signal="item_equipped" from="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot2" to="InventoryManager" method="_on_item_equipped"]
+[connection signal="item_unequipped" from="InventoryManager/VBoxContainer/HBoxContainer/WeaponSlot2" to="InventoryManager" method="_on_item_unequipped"]

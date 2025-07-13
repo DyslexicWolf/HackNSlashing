@@ -1,8 +1,10 @@
 class_name Weapon
 extends Node2D
 
-#set these variables in the init function in the child class
-@export var equipped_weapon_data : WeaponResource
+var weapon_datas: Array[WeaponResource] = [null, null]
+var active_weapon_index: int = 0
+var current_data: WeaponResource = null
+
 @onready var weapon_sprite = $"../WeaponSprite"
 var weapon_animation_player = null
 var weapon_hitbox = null
@@ -32,34 +34,58 @@ func _ready() -> void:
 	player_object = get_parent()
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_hitbox = $"../WeaponHitBox"
-	_load_weapon(equipped_weapon_data)
+	if not weapon_animation_player.animation_finished.is_connected(on_animation_finished):
+		weapon_animation_player.animation_finished.connect(on_animation_finished)
 
-func _load_weapon(new_weapon_data : WeaponResource):
-	equipped_weapon_data = new_weapon_data
-	weapon_sprite.texture = equipped_weapon_data.animation_texture
-	weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
-	if weapon_animation_player.animation_finished.is_connected(on_animation_finished) :
-		weapon_animation_player.animation_finished.disconnect(on_animation_finished)
-		weapon_animation_player.animation_finished.connect(on_animation_finished)
-	else :
-		weapon_animation_player.animation_finished.connect(on_animation_finished)
+func _load_weapon(index : int):
+	var new_weapon_data = weapon_datas[index]
+	print("Loading weapon at index %d: %s" % [index, str(new_weapon_data)])
+	if new_weapon_data == null:
+		weapon_sprite.texture = null
+		weapon_animation_player.stop()
+		weapon_hitbox.damage = 0
+		weapon_hitbox.elemental_damage = 0
+		return
+	
+	current_data = new_weapon_data
+	weapon_sprite.texture = new_weapon_data.animation_texture
+	weapon_animation_player.play(new_weapon_data.idle_animation, -1, new_weapon_data.idle_animation_speed, false)
+	
 	#assign a temp value, this will be overwritten once the statmanager signals trigger
 	weapon_hitbox.damage = calculated_physical_damage
 	weapon_hitbox.elemental_damage = calculated_elemental_damage
-	weapon_hitbox.damage_type = equipped_weapon_data.damage_type
+	weapon_hitbox.damage_type = new_weapon_data.damage_type
 
 func _physics_process(_delta : float):
+	if current_data == null:
+		return
 	get_animation_specifics()
 	if Input.is_action_pressed("attack", false) and can_attack and !is_attacking:
+		print("attacked")
 		is_attacking = true
 		can_attack = false
 		calculate_crit()
-		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, calculated_attack_animation_speed, false)
+		weapon_animation_player.play(current_data.attack_animation, -1, calculated_attack_animation_speed, false)
 	elif !is_attacking:
-		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
+		weapon_animation_player.play(current_data.idle_animation, -1, current_data.idle_animation_speed, false)
+	if Input.is_action_just_pressed("swap_weapon_up"):
+		_swap_weapon(1)
+	elif Input.is_action_just_pressed("swap_weapon_down"):
+		_swap_weapon(-1)
+
+func _swap_weapon(direction: int):
+	var next_index = (active_weapon_index + direction) % 2
+	if next_index < 0:
+		next_index = 1
+	if weapon_datas[next_index] != null:
+		active_weapon_index = next_index
+		_load_weapon(active_weapon_index)
+		#possibly emit a signal for the player to know that the weapon has been swapped
+		#ex. player_object.weapon_swapped.emit(weapon_datas[active_weapon_index], active_weapon_index)
 
 func on_animation_finished(animation_name : String):
-	if animation_name == equipped_weapon_data.attack_animation:
+	if current_data != null and animation_name == current_data.attack_animation:
+		print("Attack animation finished")
 		is_attacking = false
 		can_attack = true
 		
@@ -76,8 +102,8 @@ func get_animation_specifics():
 	weapon_hitbox.rotate(PI/2)
 	
 	# Calculate the new position of the sword based on the angle
-	weapon_sprite.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
-	weapon_hitbox.position = Vector2(cos(angle) * equipped_weapon_data.weapon_distance_x, sin(angle) * equipped_weapon_data.weapon_distance_y)
+	weapon_sprite.position = Vector2(cos(angle) * current_data.weapon_distance_x, sin(angle) * current_data.weapon_distance_y)
+	weapon_hitbox.position = Vector2(cos(angle) * current_data.weapon_distance_x, sin(angle) * current_data.weapon_distance_y)
 
 func _on_weapon_hit_box_area_entered(area: Area2D) -> void:
 	if area is HurtBox:
@@ -92,31 +118,44 @@ func _on_weapon_hit_box_area_entered(area: Area2D) -> void:
 func calculate_crit() -> void:
 	pass
 
-func _on_weapon_equipped(weapon : WeaponResource) -> void:
-	_load_weapon(weapon)
+func _on_weapon_equipped(weapon : WeaponResource, slot_index: int) -> void:
+	print("Equipping weapon:", weapon.name, "at slot index:", slot_index)
+	weapon_datas[slot_index] = weapon
+	if slot_index == active_weapon_index:
+		_load_weapon(active_weapon_index)
+		#possibly emit a signal to the player that the weapon has been equipped
+		#ex. player_object.weapon_equipped.emit(weapon, slot_index)
 
 func _on_strength_changed(new_value: int) -> void:
 	#temp calculation with testing values
+	if current_data == null:
+		return
 	var scaling_factor := 0.05
-	calculated_physical_damage = int(equipped_weapon_data.base_damage * (1 + new_value * scaling_factor))
+	calculated_physical_damage = int(current_data.base_damage * (1 + new_value * scaling_factor))
 	if weapon_hitbox != null:
 		weapon_hitbox.damage = calculated_physical_damage
 
 func _on_intelligence_changed(new_value: int) -> void:
 	#temp calculation with testing values
+	if current_data == null:
+		return
 	var scaling_factor := 0.07
-	calculated_elemental_damage = int(equipped_weapon_data.base_elemental_damage * (1 + new_value * scaling_factor))
+	calculated_elemental_damage = int(current_data.base_elemental_damage * (1 + new_value * scaling_factor))
 	if weapon_hitbox != null:
 		weapon_hitbox.elemental_damage = calculated_elemental_damage
 
 func _on_crit_chance_changed(new_value: int) -> void:
 	#temp calculation with testing values
-	var base_value := equipped_weapon_data.base_crit_chance
+	if current_data == null:
+		return
+	var base_value := current_data.base_crit_chance
 	var scaling := 0.0025
 	calculated_crit_chance = int(base_value + new_value * scaling)
 
 func _on_attack_speed_changed(new_value: int) -> void:
 	#temp calculation with testing values
-	var base_attack_rate := equipped_weapon_data.attack_animation_speed
+	if current_data == null:
+		return
+	var base_attack_rate := current_data.attack_animation_speed
 	var scaling := 0.01
 	calculated_attack_animation_speed = base_attack_rate * (1 + new_value * scaling)
