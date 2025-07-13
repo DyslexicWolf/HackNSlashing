@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://b36cyrcp3ikk1"]
+[gd_scene load_steps=9 format=4 uid="uid://b36cyrcp3ikk1"]
 
 [ext_resource type="PackedScene" uid="uid://bmjs8ru7k3ke" path="res://Scenes/Player.tscn" id="1_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/Slime.tscn" id="3_fgofq"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://c60abfvxmm4ly" path="res://Scenes/PickupItem.tscn" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://bu04ynlcfou8u" path="res://Scripts/BaseClasses/ItemSpawner.gd" id="5_bf53h"]
 [ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="5_fgofq"]
-[ext_resource type="PackedScene" uid="uid://8ts5e0ysiveh" path="res://Scenes/Inventory.tscn" id="7_1l0tm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("4_2irst")
@@ -54,5 +53,3 @@ sword_pickup = ExtResource("5_fgofq")
 
 [node name="PickupItem" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(67, 12)
-
-[node name="Inventory" parent="." instance=ExtResource("7_1l0tm")]

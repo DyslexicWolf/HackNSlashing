@@ -13,7 +13,6 @@ var can_attack: bool = true : set = set_can_attack, get = get_can_attack
 var calculated_physical_damage: int
 var calculated_elemental_damage: int
 var calculated_crit_chance: int
-#has to be a float for accuracy, otherwise it auto rounds to whole numbers
 var calculated_attack_animation_speed: float
 
 func set_is_attacking(value : bool):
@@ -33,9 +32,6 @@ func _ready() -> void:
 	player_object = get_parent()
 	weapon_animation_player = $"../WeaponAnimationPlayer"
 	weapon_hitbox = $"../WeaponHitBox"
-	weapon_hitbox.monitoring = true
-	weapon_hitbox.monitorable = true
-	# weapon_hitbox.get_node("CollisionPolygon2D").disabled = false
 	_load_weapon(equipped_weapon_data)
 
 func _load_weapon(new_weapon_data : WeaponResource):
@@ -52,7 +48,6 @@ func _load_weapon(new_weapon_data : WeaponResource):
 	weapon_hitbox.elemental_damage = calculated_elemental_damage
 	weapon_hitbox.damage_type = equipped_weapon_data.damage_type
 
-#call this in _physics_process function in child classes
 func _physics_process(_delta : float):
 	get_animation_specifics()
 	if Input.is_action_pressed("attack", false) and can_attack and !is_attacking:
@@ -62,7 +57,6 @@ func _physics_process(_delta : float):
 		weapon_animation_player.play(equipped_weapon_data.attack_animation, -1, calculated_attack_animation_speed, false)
 	elif !is_attacking:
 		weapon_animation_player.play(equipped_weapon_data.idle_animation, -1, equipped_weapon_data.idle_animation_speed, false)
-	
 
 func on_animation_finished(animation_name : String):
 	if animation_name == equipped_weapon_data.attack_animation:
@@ -99,9 +93,6 @@ func calculate_crit() -> void:
 	pass
 
 func _on_weapon_equipped(weapon : WeaponResource) -> void:
-	_load_weapon(weapon)
-
-func _on_picked_up_weapon(weapon: WeaponResource) -> void:
 	_load_weapon(weapon)
 
 func _on_strength_changed(new_value: int) -> void:

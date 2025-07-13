@@ -16,7 +16,6 @@ func initialize(d: ItemResource) -> void:
 
 
 func _get_drag_data(at_position: Vector2):
-	print("in get drag")
 	set_drag_preview(make_drag_preview(at_position))
 	return self
 

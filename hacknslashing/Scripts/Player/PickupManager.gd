@@ -1,5 +1,6 @@
 extends Area2D
 
+@onready var inventory_manager = $"../InventoryManager"
 var pickup_items: Array[PickupItem] = []
 
 signal picked_up_weapon(weapon : WeaponResource)
@@ -32,11 +33,14 @@ func _input(event: InputEvent) -> void:
 		if pickup_items.size() != 0:
 			var first_pickup = pickup_items[0]
 			var item = first_pickup.item_resource
-			if item is WeaponResource:
-				picked_up_weapon.emit(item as WeaponResource)
-			elif item is ScrollResource:
-				picked_up_scroll.emit(item as ScrollResource)
-			elif item is ArmorResource:
-				picked_up_armor.emit(item as ArmorResource)
-			pickup_items.erase(first_pickup)
-			first_pickup.queue_free()
+			if inventory_manager.has_empty_slot():
+				if item is WeaponResource:
+					picked_up_weapon.emit(item as WeaponResource)
+				elif item is ScrollResource:
+					picked_up_scroll.emit(item as ScrollResource)
+				elif item is ArmorResource:
+					picked_up_armor.emit(item as ArmorResource)
+					pickup_items.erase(first_pickup)
+				first_pickup.queue_free()
+			else:
+				print("No empty inventory slot!")
