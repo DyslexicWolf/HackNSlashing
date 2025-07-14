@@ -355,6 +355,7 @@ autoplay = "idle_front"
 [node name="HurtBoxPlayer" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource("3_lslt6")
+is_player = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxPlayer"]
 position = Vector2(0, 2)
@@ -450,6 +451,7 @@ script = ExtResource("18_5v66d")
 
 [connection signal="received_damage" from="HurtBoxPlayer" to="HealthManager" method="_on_received_damage"]
 [connection signal="area_entered" from="WeaponHitBox" to="WeaponManager" method="_on_weapon_hit_box_area_entered"]
+[connection signal="animation_finished" from="WeaponAnimationPlayer" to="WeaponManager" method="_on_animation_finished"]
 [connection signal="picked_up_weapon" from="PickupManager" to="InventoryManager" method="_on_picked_up_weapon"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
 [connection signal="health_depleted" from="HealthManager" to="." method="_on_health_depleted"]

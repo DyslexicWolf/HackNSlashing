@@ -15,8 +15,10 @@ var luck: int : set = set_luck, get = get_luck
 
 var armor: int : set = set_armor, get = get_armor
 var movement_speed: int : set = set_movement_speed, get = get_movement_speed
+
 #this value changes the attack animation speed, which intern makes the character attack faster or slower
 #we DO NOT have an attackspeed value in other scripts, look for attack animation speed
+#0 means no change, 1 means 100% faster, -1 means 100% slower
 var attack_speed: int : set = set_attack_speed, get = get_attack_speed
 var crit_chance: int : set = set_crit_chance, get = get_attack_speed
 
@@ -30,7 +32,7 @@ signal movement_speed_changed(new_value : int)
 signal attack_speed_changed(new_value : int)
 signal crit_chance_changed(new_value : int)
 
-#set functions for all the stats
+
 func set_constitution(value : int):
 	constitution += value
 	constitution_changed.emit(constitution)
@@ -67,8 +69,6 @@ func set_crit_chance(value : int):
 	crit_chance += value
 	crit_chance_changed.emit(crit_chance)
 
-
-#get functions for all the stats
 func get_constitution() -> int:
 	return constitution
 
@@ -99,6 +99,7 @@ func get_crit_chance() -> int:
 
 func _ready() -> void:
 	#Set base values for all the stats, trigger signals to set initial data for other scripts depending on these stats
+	#we can also set these values in the editor using @export and then emit all the signals here
 	constitution = 10
 	intelligence = 10
 	dexterity = 10
@@ -108,12 +109,6 @@ func _ready() -> void:
 	movement_speed = 130
 	attack_speed = 0
 	crit_chance = 5
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
 
 func _on_weapon_loaded() -> void:
 	strength_changed.emit(strength)

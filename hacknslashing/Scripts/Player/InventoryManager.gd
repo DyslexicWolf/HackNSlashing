@@ -21,35 +21,31 @@ func _ready():
 	
 	for i in temp_items_load_fortesting.size():
 		var item_resource = load(temp_items_load_fortesting[i])
-		print("Loaded resource:", item_resource)
 		var item := InventoryItem.new()
 		item.initialize(item_resource)
 		inventory_gridpanel.get_child(i).add_child(item)
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("inventory_menu"):
-		self.visible = !self.visible
+func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("open_inventory"):
+		self.visible = true
+	if Input.is_action_just_pressed("close_inventory"):
+		self.visible = false
 
 func _on_item_equipped(item: InventoryItem, slot_index: int) -> void:
 	if item.item_data is WeaponResource:
-		var weapon_slot = get_weapon_slot_index(slot_index)
-		weapon_slots[weapon_slot] = item
-		weapon_equipped.emit(item.item_data, weapon_slot)
+		#this depends on how many weapon slots we have, if we have 2 weapon slots, we can only unequip from slot 0 or 1
+		if slot_index > 1:
+			slot_index = 0
+		weapon_slots[slot_index] = item
+		weapon_equipped.emit(item.item_data, slot_index)
 
 func _on_item_unequipped(item: InventoryItem, slot_index: int) -> void:
-	print("item unequipped:")
 	if item.item_data is WeaponResource:
-		var weapon_slot = get_weapon_slot_index(slot_index)
-		weapon_slots[weapon_slot] = null
-		weapon_unequipped.emit(weapon_slot)
-
-func get_weapon_slot_index(inventory_slot_index: int) -> int:
-	# Check if the inventory slot is a weapon slot
-	if inventory_slot_index == 0:
-		return 0
-	if inventory_slot_index == 1:
-		return 1
-	return 0
+		#this depends on how many weapon slots we have, if we have 2 weapon slots, we can only unequip from slot 0 or 1
+		if slot_index > 1:
+			slot_index = 0
+		weapon_slots[slot_index] = null
+		weapon_unequipped.emit(slot_index)
 
 func _on_picked_up_weapon(weapon: WeaponResource) -> void:
 	# Check if there is an empty slot in the inventory
@@ -65,8 +61,6 @@ func _on_picked_up_weapon(weapon: WeaponResource) -> void:
 	new_item.initialize(weapon)
 	inventory_gridpanel.get_child(0).add_child(new_item)
 	weapon_slots[0] = new_item
-	print("Picked up weapon:", weapon.name)
-
 
 func has_empty_slot() -> bool:
 	for i in range(inventory_gridpanel.get_child_count()):

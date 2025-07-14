@@ -7,9 +7,7 @@ var isAttacking: bool = false
 
 
 func _physics_process(_delta: float):
-	#read input
 	get_input()
-	#changed animation if needed
 	change_animation()
 	#move character using buildin function
 	move_and_slide()
@@ -41,6 +39,6 @@ func _on_health_depleted() -> void:
 	queue_free()
 
 func _on_movement_speed_changed(_new_value: int) -> void:
-	#temporary calculation
+	#temporary calculation/values
 	#speed += new_value
 	pass

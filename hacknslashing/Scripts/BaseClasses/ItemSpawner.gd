@@ -4,4 +4,4 @@ extends Node2D
 var pickup_scene = preload("res://Scenes/PickupItem.tscn")
 
 func _ready() -> void:
-	var inst_pickup_scene = pickup_scene.instantiate()
+	var _inst_pickup_scene = pickup_scene.instantiate()

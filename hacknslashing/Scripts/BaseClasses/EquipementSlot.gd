@@ -26,17 +26,21 @@ func _drop_data(_at_position: Vector2, data: Variant):
 	if data is InventoryItem:
 		if data.get_parent() == self:
 			return
-		
+
+		#if there is an existing item switch it with the dragged item
 		if get_child_count() > 0:
 			var existing_item := get_child(0)
 			previous_item = existing_item
-			# Move the existing item (in the slot) to the slot of the item you are swapping it with
-			var new_slot = data.get_parent()
+			var old_slot = data.get_parent()
 			existing_item.get_parent().remove_child(existing_item)
-			if new_slot:
-				new_slot.get_parent().add_child(existing_item)
-				if new_slot == EquipementSlot:
-					item_unequipped.emit(previous_item, new_slot.slot_index)
+
+			if old_slot != null:
+				old_slot.get_parent().add_child(existing_item)
+				if old_slot is EquipementSlot:
+					item_unequipped.emit(data, old_slot.slot_index)
+		
+		elif data.get_parent() is EquipementSlot:
+			item_unequipped.emit(data, data.get_parent().slot_index)
 		
 		#Move the dragged item into this slot
 		data.get_parent().remove_child(data)

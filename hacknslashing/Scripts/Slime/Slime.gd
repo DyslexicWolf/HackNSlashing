@@ -4,5 +4,6 @@ extends RigidBody2D
 func _on_health_depleted() -> void:
 	queue_free()
 
-func _on_health_changed(diff: int) -> void:
+func _on_health_changed(_diff: int) -> void:
+	#can be used to play hurt animation or sound for the slime
 	print("slime health changed")

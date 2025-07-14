@@ -15,7 +15,6 @@ func set_max_health(value: int):
 	var clamped_value = 1 if value <= 0 else value
 	
 	if clamped_value != max_health:
-		#calculate the maxhealthchange
 		var difference = clamped_value - max_health
 		max_health = clamped_value
 		max_health_changed.emit(difference)
@@ -26,7 +25,6 @@ func set_max_health(value: int):
 func set_health(value: int):
 	var clamped_value = clampi(value, 0, max_health)
 	if clamped_value != health:
-		#calculate the healthchange
 		var difference = clamped_value - health
 		health = clamped_value
 		health_changed.emit(difference)
@@ -41,7 +39,7 @@ func get_health() -> int:
 	return health
 
 func _on_received_damage(damage: int, damage_type: DamageType) -> void:
-	#temp calculation with testing values
+	#temp calculation/values
 	if damage_type == DamageType.PHYSICAL:
 		var mitigation := current_armor / (current_armor + 100.0)
 		var reduced_damage := damage * (1 - mitigation)

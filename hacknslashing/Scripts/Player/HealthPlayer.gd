@@ -8,13 +8,8 @@ func _ready() -> void:
 	health = max_health
 
 func set_health(value: int):
-	#return (do nothing) if you value is lower than health (because we will have a takedamage func for that
-	#or if immortality is true
-	#implement immortality logic if wanted	
-	
 	var clamped_value = clampi(value, 0, max_health)
 	if clamped_value != health:
-		#calculate the healthchange
 		var difference = clamped_value - health
 		health = clamped_value
 		health_changed.emit(difference)
@@ -30,7 +25,6 @@ func get_immortality() -> bool:
 	return immortality
 
 func set_temporary_immortality(time: float):
-	#if there isnt a timer present, create 1 with these settings
 	if immortality_timer == null:
 		immortality_timer = Timer.new()
 		immortality_timer.one_shot = true
@@ -46,7 +40,7 @@ func set_temporary_immortality(time: float):
 	immortality_timer.start()
 
 func _on_constitution_changed(new_value: int) -> void:
-	#temp calculation with testing values
+	#temp calculation/values
 	var base_health := 20
 	var scaling := 10
 	max_health = base_health + new_value * scaling

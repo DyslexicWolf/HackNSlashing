@@ -28,7 +28,6 @@ func _on_area_exited(area):
 
 
 func _input(event: InputEvent) -> void:
-	#add pickup logic for different kinds of items
 	if event.is_action_pressed("pickup"):
 		if pickup_items.size() != 0:
 			var first_pickup = pickup_items[0]
@@ -43,4 +42,6 @@ func _input(event: InputEvent) -> void:
 					pickup_items.erase(first_pickup)
 				first_pickup.queue_free()
 			else:
+				#IMPLEMENT THIS LOGIC, THE ITEM SHOULDNT BE PICKED UP OR DELETED IF THERE IS NO EMPTY SLOT
+				#!!!!!!
 				print("No empty inventory slot!")
