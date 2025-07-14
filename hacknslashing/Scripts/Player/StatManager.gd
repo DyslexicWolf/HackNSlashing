@@ -111,5 +111,12 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
+
+
+func _on_weapon_loaded() -> void:
+	strength_changed.emit(strength)
+	intelligence_changed.emit(intelligence)
+	crit_chance_changed.emit(crit_chance)
+	attack_speed_changed.emit(attack_speed)

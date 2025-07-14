@@ -2,6 +2,7 @@ extends CanvasLayer
 class_name InventoryManager
 
 signal weapon_equipped(weapon: WeaponResource, slot_index: int)
+signal weapon_unequipped(weapon: WeaponResource, slot_index: int)
 var inventory_size = 8
 var inventory_gridpanel : GridContainer
 var weapon_slots: Array = [null, null]
@@ -16,6 +17,7 @@ func _ready():
 		var slot := InventorySlot.new()
 		slot.initialize(ItemResource.Type.WEAPON, Vector2(64, 64))
 		inventory_gridpanel.add_child(slot)
+		slot.connect("item_unequipped", _on_item_unequipped)
 	
 	for i in temp_items_load_fortesting.size():
 		var item_resource = load(temp_items_load_fortesting[i])
@@ -35,10 +37,11 @@ func _on_item_equipped(item: InventoryItem, slot_index: int) -> void:
 		weapon_equipped.emit(item.item_data, weapon_slot)
 
 func _on_item_unequipped(item: InventoryItem, slot_index: int) -> void:
+	print("item unequipped:")
 	if item.item_data is WeaponResource:
 		var weapon_slot = get_weapon_slot_index(slot_index)
 		weapon_slots[weapon_slot] = null
-		weapon_equipped.emit(null, weapon_slot)
+		weapon_unequipped.emit(weapon_slot)
 
 func get_weapon_slot_index(inventory_slot_index: int) -> int:
 	# Check if the inventory slot is a weapon slot

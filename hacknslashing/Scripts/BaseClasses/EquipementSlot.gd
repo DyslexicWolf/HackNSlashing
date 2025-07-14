@@ -4,7 +4,6 @@ class_name EquipementSlot
 
 @export var slot_index : int = -1
 
-signal item_unequipped(item : InventoryItem, slot_index : int)
 signal item_equipped(item : InventoryItem, slot_index : int)
 
 
@@ -31,12 +30,13 @@ func _drop_data(_at_position: Vector2, data: Variant):
 		if get_child_count() > 0:
 			var existing_item := get_child(0)
 			previous_item = existing_item
-			#Move the existing item (in the slot) to the slot of the item you are swapping it with
+			# Move the existing item (in the slot) to the slot of the item you are swapping it with
 			var new_slot = data.get_parent()
 			existing_item.get_parent().remove_child(existing_item)
 			if new_slot:
 				new_slot.get_parent().add_child(existing_item)
-			item_unequipped.emit(previous_item, slot_index)
+				if new_slot == EquipementSlot:
+					item_unequipped.emit(previous_item, new_slot.slot_index)
 		
 		#Move the dragged item into this slot
 		data.get_parent().remove_child(data)
