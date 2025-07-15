@@ -51,7 +51,7 @@ func _load_weapon(index : int):
 	weapon_animation_player.play(new_weapon_data.idle_animation, -1, new_weapon_data.idle_animation_speed, false)
 	can_attack = true
 	is_attacking = false
-	
+
 func _physics_process(_delta : float):
 	get_animation_specifics()
 
