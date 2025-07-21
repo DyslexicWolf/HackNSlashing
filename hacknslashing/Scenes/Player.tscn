@@ -1,7 +1,6 @@
 [gd_scene load_steps=53 format=3 uid="uid://bmjs8ru7k3ke"]
 
 [ext_resource type="Script" uid="uid://cm3qcps0seot5" path="res://Scripts/Player/Player.gd" id="1_cvnsp"]
-[ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/HealthPlayer.gd" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://bqlcyt560macg" path="res://Assets/Sprites/PlayerCharacter_SpriteSheet.png" id="3_fkybt"]
 [ext_resource type="Script" uid="uid://dpsjxqku18myx" path="res://Scripts/BaseClasses/Hurtbox.gd" id="3_lslt6"]
 [ext_resource type="Script" uid="uid://cbgk783ujah1c" path="res://Scripts/Player/WeaponHitbox.gd" id="4_o3h8g"]
@@ -12,6 +11,7 @@
 [ext_resource type="Animation" uid="uid://bi284q4moaecs" path="res://Assets/Animations/SpearIdleAnimation.res" id="9_gymyn"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="9_pu2lt"]
 [ext_resource type="Animation" uid="uid://bmktlnjq6806i" path="res://Assets/Animations/SpearAttackAnimation.res" id="10_pu2lt"]
+[ext_resource type="Script" uid="uid://brwtjeitt22oy" path="res://Scripts/Player/PlayerHealth.gd" id="11_fd4e3"]
 [ext_resource type="Script" uid="uid://tl0o0rhrhmer" path="res://Scripts/Player/PickupManager.gd" id="12_ukyrk"]
 [ext_resource type="Script" uid="uid://c0lr47ujesboj" path="res://Scripts/BaseClasses/EquipementSlot.gd" id="15_arntx"]
 [ext_resource type="Script" uid="uid://bvxnckrtg5y85" path="res://Scripts/Player/InventoryManager.gd" id="16_1iu4k"]
@@ -391,7 +391,7 @@ script = ExtResource("12_ukyrk")
 shape = SubResource("CapsuleShape2D_o3h8g")
 
 [node name="HealthManager" type="Node2D" parent="."]
-script = ExtResource("2_fkybt")
+script = ExtResource("11_fd4e3")
 
 [node name="WeaponManager" type="Node2D" parent="."]
 script = ExtResource("5_fkybt")

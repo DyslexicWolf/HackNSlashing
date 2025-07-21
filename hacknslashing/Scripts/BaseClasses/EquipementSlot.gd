@@ -3,7 +3,6 @@ class_name EquipementSlot
 
 
 @export var slot_index : int = -1
-
 signal item_equipped(item : InventoryItem, slot_index : int)
 
 
