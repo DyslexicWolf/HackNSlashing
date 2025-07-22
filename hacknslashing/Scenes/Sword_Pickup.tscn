@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://c60abfvxmm4ly"]
+
+[ext_resource type="Script" uid="uid://c07027hrt2jna" path="res://Scripts/BaseClasses/PickupItem.gd" id="1_w8kng"]
+[ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="2_vv0qw"]
+[ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="3_aavfa"]
+[ext_resource type="FontFile" uid="uid://p5h64qviim8" path="res://Resources/ResourceBlueprints/PixelOperator8.ttf" id="4_m6x1r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ipw6"]
+radius = 19.0263
+
+[node name="Sword_Pickup" type="Node2D"]
+script = ExtResource("1_w8kng")
+item_resource = ExtResource("2_vv0qw")
+metadata/_custom_type_script = "uid://c07027hrt2jna"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_aavfa")
+hframes = 10
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_4ipw6")
+
+[node name="PickupText" type="Label" parent="."]
+visible = false
+offset_left = -78.0
+offset_top = 17.0
+offset_right = 78.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("4_m6x1r")
+theme_override_font_sizes/font_size = 8
+text = "Press \"E\" to pick up item"
+
+[connection signal="area_entered" from="PickupArea" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="PickupArea" to="." method="_on_area_exited"]

@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="ItemPool" load_steps=5 format=3 uid="uid://t63b74vhstth"]
+[gd_resource type="Resource" script_class="ItemPool" load_steps=4 format=3 uid="uid://t63b74vhstth"]
 
-[ext_resource type="Script" uid="uid://c75ctdrl7ljf5" path="res://Resources/ResourceBlueprints/ItemResource.gd" id="1_ksahy"]
+[ext_resource type="PackedScene" uid="uid://miuwyeg6r0pa" path="res://Scenes/Spear_Pickup.tscn" id="1_py1gj"]
 [ext_resource type="Script" uid="uid://lj4eatqstr7q" path="res://Resources/ResourceBlueprints/ItemPool.gd" id="1_w3cio"]
-[ext_resource type="Resource" uid="uid://lk73u83ckawr" path="res://Resources/SpearResource.tres" id="2_0g7m6"]
-[ext_resource type="Resource" uid="uid://bonn4va8moen0" path="res://Resources/SwordResource.tres" id="3_7d81m"]
+[ext_resource type="PackedScene" uid="uid://c60abfvxmm4ly" path="res://Scenes/Sword_Pickup.tscn" id="2_0g7m6"]
 
 [resource]
 script = ExtResource("1_w3cio")
-item_pool = Array[ExtResource("1_ksahy")]([ExtResource("2_0g7m6"), ExtResource("3_7d81m")])
+item_pool = Array[PackedScene]([ExtResource("1_py1gj"), ExtResource("2_0g7m6")])
 metadata/_custom_type_script = "uid://lj4eatqstr7q"

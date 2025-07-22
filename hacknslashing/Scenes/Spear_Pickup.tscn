@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://miuwyeg6r0pa"]
+
+[ext_resource type="Texture2D" uid="uid://b1ofge4eg1g6t" path="res://Assets/Sprites/Spear_Texture.png" id="1_3ubxv"]
+[ext_resource type="Script" uid="uid://c07027hrt2jna" path="res://Scripts/BaseClasses/PickupItem.gd" id="1_q0wq4"]
+[ext_resource type="Resource" uid="uid://lk73u83ckawr" path="res://Resources/SpearResource.tres" id="2_5a72h"]
+[ext_resource type="FontFile" uid="uid://p5h64qviim8" path="res://Resources/ResourceBlueprints/PixelOperator8.ttf" id="4_5a72h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t47u7"]
+radius = 16.0
+
+[node name="Spear_Pickup" type="Node2D"]
+script = ExtResource("1_q0wq4")
+item_resource = ExtResource("2_5a72h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.38419e-07, -2.38419e-07)
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("1_3ubxv")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_t47u7")
+
+[node name="PickupText" type="Label" parent="."]
+visible = false
+offset_left = -88.0
+offset_top = 8.0
+offset_right = 101.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("4_5a72h")
+theme_override_font_sizes/font_size = 8
+text = "Press \"E\" to pick up item"

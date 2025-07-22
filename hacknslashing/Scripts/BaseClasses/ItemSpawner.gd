@@ -17,7 +17,16 @@ func _on_dungeon_level_changed(new_level: String) -> void:
 
 func _process(delta: float) -> void:
 	if !has_spawned and current_item_pool != null:
-		_on_spawn_item()
+		print("spawned item")
+		has_spawned = true
+		_on_spawn_item(Vector2(50, 0))
 
-func _on_spawn_item() -> void:
-	current_item_pool.get_random_item()
+func _on_spawn_item(enemy_death_position: Vector2) -> void:
+	var item_scene = current_item_pool.get_random_item()
+	if item_scene:
+		var item_instance = item_scene.instantiate()
+		#set the position of the item, this is based on where the enemy died
+		item_instance.position = enemy_death_position
+		add_child(item_instance)
+	else:
+		print("No item returned from item pool.")
