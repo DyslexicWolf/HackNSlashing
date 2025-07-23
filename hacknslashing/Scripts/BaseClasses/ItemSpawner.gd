@@ -15,7 +15,7 @@ func _on_dungeon_level_changed(new_level: String) -> void:
 		current_item_pool = load("res://Resources/OvergrownMantel_ItemPool.tres")
 		print("Dungeon level changed to: ", current_dungeon_level)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !has_spawned and current_item_pool != null:
 		print("spawned item")
 		has_spawned = true
