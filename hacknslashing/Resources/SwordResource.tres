@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://bonn4va8moen0"]
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=5 format=3 uid="uid://bonn4va8moen0"]
 
 [ext_resource type="Script" uid="uid://dnltylmtrn2tg" path="res://Resources/ResourceBlueprints/WeaponResource.gd" id="1_grmnr"]
 [ext_resource type="Texture2D" uid="uid://b243yawqo4m7d" path="res://Assets/Sprites/Sword_Spritesheet.png" id="2_j61fh"]
 [ext_resource type="Texture2D" uid="uid://iqjehaa1kv4r" path="res://Assets/Sprites/Sword_Texture.png" id="2_rk5kr"]
+[ext_resource type="PackedScene" uid="uid://miuwyeg6r0pa" path="res://Scenes/Spear_Pickup.tscn" id="2_shfl6"]
 
 [resource]
 script = ExtResource("1_grmnr")
@@ -21,4 +22,5 @@ name = "Sword"
 type = 1
 ui_texture = ExtResource("2_rk5kr")
 description = "What a sword"
+pickup_scene = ExtResource("2_shfl6")
 metadata/_custom_type_script = "uid://dnltylmtrn2tg"

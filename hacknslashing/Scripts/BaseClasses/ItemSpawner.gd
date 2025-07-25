@@ -1,4 +1,5 @@
 extends Node2D
+class_name ItemSpawner
 
 var current_dungeon_level:  = ""
 var current_item_pool : ItemPool = null
@@ -30,3 +31,9 @@ func _on_spawn_item(enemy_death_position: Vector2) -> void:
 		add_child(item_instance)
 	else:
 		print("No item returned from item pool.")
+
+func _on_item_dropped_from_inventory(data : InventoryItem) -> void:
+	var item_to_spawn = load(data.item_data.pickup_scene_path.format({"name": data.item_data.name}))
+	var item_instance = item_to_spawn.instantiate()
+	item_instance.position = get_global_mouse_position()
+	add_child(item_instance)
