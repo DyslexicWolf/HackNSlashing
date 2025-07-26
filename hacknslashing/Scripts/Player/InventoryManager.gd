@@ -26,9 +26,9 @@ func _ready():
 		inventory_gridpanel.get_child(i).add_child(item)
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("open_inventory"):
+	if Input.is_action_just_pressed("open_inventory") and self.visible == false:
 		self.visible = true
-	if Input.is_action_just_pressed("close_inventory"):
+	elif Input.is_action_just_pressed("close_inventory") and self.visible == true:
 		self.visible = false
 
 func _on_item_equipped(item: InventoryItem, slot_index: int) -> void:
