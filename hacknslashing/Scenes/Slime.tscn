@@ -1,21 +1,84 @@
-[gd_scene load_steps=10 format=3 uid="uid://bwsqn33maj6u8"]
+[gd_scene load_steps=14 format=3 uid="uid://bwsqn33maj6u8"]
 
 [ext_resource type="Script" uid="uid://c00fjsds8q6e7" path="res://Scripts/Slime/Slime.gd" id="1_jokqx"]
 [ext_resource type="Script" uid="uid://ba3afk3qfoa5u" path="res://Scripts/Slime/HealthSlime.gd" id="2_f4si1"]
-[ext_resource type="Texture2D" uid="uid://cyjpo7ifu4gs5" path="res://Assets/Sprites/Slime_temp.png" id="2_swwnm"]
+[ext_resource type="Texture2D" uid="uid://deefchu4b4e6h" path="res://Assets/Sprites/Slime_SpriteSheet.png" id="2_oi5nh"]
+[ext_resource type="Animation" uid="uid://dv401y47me52x" path="res://Assets/Animations/Animations_Slime/idle.res" id="3_h65gf"]
 [ext_resource type="Script" uid="uid://dpsjxqku18myx" path="res://Scripts/BaseClasses/Hurtbox.gd" id="3_oi5nh"]
 [ext_resource type="Script" uid="uid://nst4qxhe45ln" path="res://Scripts/Slime/HitboxSlime.gd" id="4_f4si1"]
+[ext_resource type="Animation" uid="uid://pgi5qpbc0g3w" path="res://Assets/Animations/Animations_Slime/attack.res" id="4_ri7b6"]
+[ext_resource type="Animation" uid="uid://b53q4wbpcmmyi" path="res://Assets/Animations/Animations_Slime/death.res" id="5_tu4ju"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_paq7w"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_swwnm")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_qmdr4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [26]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HitBoxSlime/CollisionShape2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.75, 0.75)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HitBoxSlime/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3mnvw"]
+_data = {
+&"RESET": SubResource("Animation_qmdr4"),
+&"attack": ExtResource("4_ri7b6"),
+&"death": ExtResource("5_tu4ju"),
+&"idle": ExtResource("3_h65gf")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f4si1"]
 radius = 14.0357
@@ -31,10 +94,17 @@ collision_layer = 2
 gravity_scale = 0.0
 script = ExtResource("1_jokqx")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_paq7w")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_oi5nh")
+hframes = 26
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3mnvw")
+}
 
 [node name="HurtBoxSlime" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, 4)
 collision_layer = 2
 script = ExtResource("3_oi5nh")
@@ -48,14 +118,22 @@ script = ExtResource("4_f4si1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxSlime"]
 position = Vector2(0, 5)
+scale = Vector2(0.75, 0.75)
 shape = SubResource("CircleShape2D_5gljc")
+disabled = true
 
 [node name="MovementBox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_swwnm")
 
 [node name="HealthManager" type="Node2D" parent="."]
+visible = false
 script = ExtResource("2_f4si1")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
+collision_mask = 9
 
 [connection signal="received_damage" from="HurtBoxSlime" to="HealthManager" method="_on_received_damage"]
 [connection signal="health_changed" from="HealthManager" to="." method="_on_health_changed"]
