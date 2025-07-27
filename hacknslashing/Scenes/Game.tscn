@@ -1,16 +1,10 @@
 [gd_scene load_steps=8 format=4 uid="uid://b36cyrcp3ikk1"]
 
 [ext_resource type="PackedScene" uid="uid://bmjs8ru7k3ke" path="res://Scenes/Player.tscn" id="1_b2bpf"]
-<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/Slime.tscn" id="2_7lihs"]
 [ext_resource type="Script" uid="uid://bu04ynlcfou8u" path="res://Scripts/BaseClasses/ItemSpawner.gd" id="3_fgofq"]
 [ext_resource type="Script" uid="uid://bhi33ihlxs714" path="res://Scripts/BaseClasses/Ground.gd" id="4_2irst"]
 [ext_resource type="Texture2D" uid="uid://cn2go4fwinlgv" path="res://Assets/Sprites/Tileset_Dungeon_SpriteSheet.png" id="5_bf53h"]
-=======
-[ext_resource type="PackedScene" uid="uid://bwsqn33maj6u8" path="res://Scenes/Slime.tscn" id="3_fgofq"]
-[ext_resource type="Texture2D" uid="uid://cn2go4fwinlgv" path="res://Assets/Sprites/Tileset_Dungeon_SpriteSheet.png" id="4_2irst"]
-[ext_resource type="Script" uid="uid://bu04ynlcfou8u" path="res://Scripts/BaseClasses/ItemSpawner.gd" id="5_bf53h"]
->>>>>>> Stashed changes
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("5_bf53h")
