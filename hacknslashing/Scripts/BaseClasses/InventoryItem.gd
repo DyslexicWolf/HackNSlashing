@@ -13,7 +13,6 @@ func initialize(d: ItemResource) -> void:
 		texture = item_data.ui_texture
 		tooltip_text = "%s\n%s" % [item_data.name, item_data.description]
 
-
 func _get_drag_data(at_position: Vector2):
 	set_drag_preview(make_drag_preview(at_position))
 	return self
