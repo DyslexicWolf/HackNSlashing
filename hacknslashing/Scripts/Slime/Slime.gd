@@ -13,6 +13,7 @@ var damage_type
 @onready var slime_sprite = self.get_node("Sprite2D")
 @onready var animated_sprite = get_node("AnimationPlayer")
 var current_animation = "" #tracks current animation
+
 func _ready() -> void:
 	speed = 30
 	agro_range = 200
@@ -25,20 +26,20 @@ func _process(delta: float) -> void:
 	var raycast = $RayCast2D
 	raycast.target_position = direction.normalized() * agro_range
 	raycast.force_raycast_update()
-
+	
 	var player_collision = raycast.is_colliding() and raycast.get_collider() == player
 	distance = direction.length()
-
+	
 	if player_collision and distance <= agro_range:
 		follow = true
 	else:
 		follow = false
-
+	
 	if follow and current_animation != "attack":
 		animated_sprite.play("idle")
 		current_animation = "idle"
 		position += direction.normalized() * speed * delta
-
+	
 	slime_sprite.set_flip_h(direction.x > 0)
 
 func _attack(area):
